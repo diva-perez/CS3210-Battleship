@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 
 public class MainWindow extends JFrame {
 
@@ -10,11 +9,13 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         super("Battleship");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setPreferredSize(new Dimension(800, 600));
+        setContentPane(new Background("Background.jpg"));
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         pack();
 
         MainMenu menu = new MainMenu(this);
         add(menu);
         setVisible(true);
     }
+
 }
