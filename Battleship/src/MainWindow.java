@@ -4,6 +4,8 @@ import java.awt.*;
 public class MainWindow extends JFrame {
     private MainMenu menu;
     private InstructionPanel instruction;
+    private GamePanel gamePanel;
+
 
     public MainWindow() {
         super("Battleship");
@@ -17,10 +19,10 @@ public class MainWindow extends JFrame {
     }
 
     public void startGame() {
-        remove(menu);
+        gamePanel = new GamePanel();
         menu.setVisible(false);
-        JPanel gamePanel = new GamePanel();
         add(gamePanel);
+        gamePanel.setVisible(true);
         repaint();
         gamePanel.requestFocus();
 
