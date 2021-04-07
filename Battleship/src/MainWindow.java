@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class MainWindow extends JFrame {
     private MainMenu menu;
+    private InstructionPanel instruction;
 
     public MainWindow() {
         super("Battleship");
@@ -17,7 +18,7 @@ public class MainWindow extends JFrame {
 
     public void startGame() {
         remove(menu);
-        menu.setFocusable(false);
+        menu.setVisible(false);
         JPanel gamePanel = new GamePanel();
         add(gamePanel);
         repaint();
@@ -26,12 +27,18 @@ public class MainWindow extends JFrame {
     }
 
     public void startInstructions() {
-        remove(menu);
-        menu.setFocusable(false);
-        JPanel instructionPanel = new InstructionPanel();
-        add(instructionPanel);
+        instruction = new InstructionPanel(this);
+        add(instruction);
+        menu.setVisible(false);
+        instruction.setVisible(true);
         repaint();
-        instructionPanel.requestFocus();
+
+    }
+
+    public void mainMenu() {
+        instruction.setVisible(false);
+        menu.setVisible(true);
+        repaint();
     }
 
     public static void main(String[] args) {
