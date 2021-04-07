@@ -2,11 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
-
-    public static void main(String[] args) {
-        MainWindow window = new MainWindow();
-        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    }
+    private MainMenu menu;
 
     public MainWindow() {
         super("Battleship");
@@ -14,9 +10,32 @@ public class MainWindow extends JFrame {
         setContentPane(new Background("Background.jpg"));
         pack();
 
-        MainMenu menu = new MainMenu(this);
+        menu = new MainMenu(this);
         add(menu);
         setVisible(true);
     }
 
+    public void startGame() {
+        remove(menu);
+        menu.setFocusable(false);
+        JPanel gamePanel = new GamePanel();
+        add(gamePanel);
+        repaint();
+        gamePanel.requestFocus();
+
+    }
+
+    public void startInstructions() {
+        remove(menu);
+        menu.setFocusable(false);
+        JPanel instructionPanel = new InstructionPanel();
+        add(instructionPanel);
+        repaint();
+        instructionPanel.requestFocus();
+    }
+
+    public static void main(String[] args) {
+        MainWindow window = new MainWindow();
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
 }

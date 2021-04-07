@@ -2,10 +2,15 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 public class MainMenu extends JPanel {
     private MainWindow frame;
+    private JButton start;
+    private JButton instruction;
 
     public MainMenu(MainWindow frame) {
         this.frame = frame;
@@ -17,19 +22,19 @@ public class MainMenu extends JPanel {
         title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
         add(title, BorderLayout.NORTH);
-        
+
 
         // start button
-        JButton start = new JButton("Start Game");
+        start = new JButton("Start Game");
         start.setFont(new Font("Arial", Font.PLAIN, 40));
         start.setAlignmentX(Component.CENTER_ALIGNMENT);
-        // need listener
+        start.addMouseListener(new StartMouseListener());
 
         //instruction button
-        JButton instruction = new JButton("Instructions");
+        instruction = new JButton("Instructions");
         instruction.setFont(new Font("Arial", Font.PLAIN, 40));
         instruction.setAlignmentX(Component.CENTER_ALIGNMENT);
-        // need listener
+        instruction.addMouseListener(new InstructionMouseListener());
 
         // menu panel
         JPanel menuPanel = new JPanel();
@@ -41,4 +46,41 @@ public class MainMenu extends JPanel {
         add(menuPanel, BorderLayout.SOUTH);
     }
 
+    private class StartMouseListener extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            frame.startGame();
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            start.setOpaque(true);
+            repaint();
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            start.setOpaque(false);
+            repaint();
+        }
+    }
+    private class InstructionMouseListener extends StartMouseListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            frame.startInstructions();
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            instruction.setOpaque(true);
+            repaint();
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            instruction.setOpaque(false);
+            repaint();
+        }
+    }
 }
+
