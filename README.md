@@ -24,7 +24,7 @@ Actual Gameplay:
   Rotating Turns
 
 End of Battle: 
-  Declare who the winner, 
+  Declare winner, 
   Return to Main Screen
   
 1st Stretch Goal:
