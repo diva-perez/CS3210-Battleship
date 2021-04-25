@@ -1,29 +1,32 @@
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
-    public int row;
-    public int column;
-
     public GamePanel() {
-        // default board size
-        row = 10;
-        column = 10;
-
         setFocusable(true);
-        setOpaque(true);
+        setOpaque(false);
         setLayout(new BorderLayout());
-        setBackground(Color.BLACK);
 
-        // 10 x 10 board
+        // title
+        JLabel title = new JLabel("BATTLE", SwingConstants.CENTER);
+        title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
+        title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
+        add(title, BorderLayout.NORTH);
+
+        /* 10 x 10 board
         JPanel board = new JPanel();
         board.setLayout(new GridLayout(row, column));
         for (int i = 0; i < 100; i++) {
             board.add(new Cell("b" + (i + 1)));
         }
-        add(board, BorderLayout.CENTER);
+        add(board, BorderLayout.CENTER); */
 
+    }
 
+    /**
+     * 5 game phases
+     */
+    private enum GamePhase {
+        PLAYER1_PLACE_SHIP, PLAYER2_PLACE_SHIP, PLAYER1_BATTLE, PLAYER2_BATTLE, GAME_OVER
     }
 }

@@ -17,7 +17,7 @@ public class MainMenu extends JPanel {
         setOpaque(false);
         setLayout(new BorderLayout());
 
-        // title panel
+        // title
         JLabel title = new JLabel("BATTLESHIP", SwingConstants.CENTER);
         title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
@@ -43,13 +43,13 @@ public class MainMenu extends JPanel {
         menuPanel.add(start);
         menuPanel.add(Box.createRigidArea(new Dimension(10, 10))); // spacer between buttons
         menuPanel.add(instruction);
-        add(menuPanel, BorderLayout.SOUTH);
+        add(menuPanel, BorderLayout.CENTER);
     }
 
     private class StartMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            frame.startGame();
+            frame.player1Wait();
         }
 
         @Override

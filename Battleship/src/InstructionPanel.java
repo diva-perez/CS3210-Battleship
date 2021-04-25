@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,10 +25,15 @@ public class InstructionPanel extends JPanel {
 
 
         // back button
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 25, 0));
+        buttonPanel.setOpaque(false);
         back = new JButton("Back");
         back.setFont(new Font("Arial", Font.PLAIN, 40));
         back.addMouseListener(new BackMouseListener());
-        add(back, BorderLayout.SOUTH);
+        buttonPanel.add(back);
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 
     private class BackMouseListener extends MouseAdapter {
