@@ -7,10 +7,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
+import static java.awt.SystemColor.menu;
+
 public class MainMenu extends JPanel {
     private MainWindow frame;
     private JButton start;
     private JButton instruction;
+    private String player = "PLAYER 1";
+    public JPanel menuPanel;
 
     public MainMenu(MainWindow frame) {
         this.frame = frame;
@@ -37,7 +41,7 @@ public class MainMenu extends JPanel {
         instruction.addMouseListener(new InstructionMouseListener());
 
         // menu panel
-        JPanel menuPanel = new JPanel();
+        menuPanel = new JPanel();
         menuPanel.setOpaque(false);
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.PAGE_AXIS));
         menuPanel.add(start);
@@ -49,7 +53,9 @@ public class MainMenu extends JPanel {
     private class StartMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            frame.player1Wait();
+            JPanel caller = null;
+            if (e.getSource() == start){ caller = menuPanel;}
+            frame.wait(caller, player);
         }
 
         @Override

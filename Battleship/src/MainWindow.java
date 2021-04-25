@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
-    private MainMenu menu;
+    public MainMenu menu;
     private InstructionPanel instruction;
     private GamePanel gamePanel;
-    private Player1WaitPanel player1Wait;
-    private Player1PlacePanel player1Place;
+    private WaitPanel wait;
+    private PlayerPanel place;
 
     public MainWindow() {
         super("Battleship");
@@ -20,23 +20,23 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    public void player1Wait() {
-        player1Wait = new Player1WaitPanel(this);
-        player1Wait.setPreferredSize(new Dimension(800, 600));;
+
+    public void wait(JPanel caller, String player) {
+        wait = new WaitPanel(this, player);
         menu.setVisible(false);
-        add(player1Wait);
-        player1Wait.setVisible(true);
+        caller.setVisible(false);
+        add(wait);
+        wait.setVisible(true);
         repaint();
     }
 
-    public void player1Place() {
-        player1Place = new Player1PlacePanel();
-        player1Wait.setVisible(false);
-        add(player1Place);
-        player1Place.setVisible(true);
+    public void place(String player) {
+        place = new PlayerPanel(player);
+        wait.setVisible(false);
+        add(place);
+        place.setVisible(true);
         repaint();
     }
-
 
     public void startBattle() {
         gamePanel = new GamePanel();
