@@ -14,9 +14,10 @@ public class MainMenu extends JPanel {
     private JButton start;
     private JButton instruction;
     private String player = "PLAYER 1";
-    public JPanel menuPanel;
+    public JPanel menu;
 
     public MainMenu(MainWindow frame) {
+        menu = this;
         this.frame = frame;
         setOpaque(false);
         setLayout(new BorderLayout());
@@ -41,7 +42,7 @@ public class MainMenu extends JPanel {
         instruction.addMouseListener(new InstructionMouseListener());
 
         // menu panel
-        menuPanel = new JPanel();
+        JPanel menuPanel = new JPanel();
         menuPanel.setOpaque(false);
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.PAGE_AXIS));
         menuPanel.add(start);
@@ -54,7 +55,7 @@ public class MainMenu extends JPanel {
         @Override
         public void mouseClicked(MouseEvent e) {
             JPanel caller = null;
-            if (e.getSource() == start){ caller = menuPanel;}
+            if (e.getSource() == start){ caller = menu;}
             frame.wait(caller, player);
         }
 
