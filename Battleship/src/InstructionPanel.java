@@ -21,6 +21,9 @@ public class InstructionPanel extends JPanel {
         // instructions
         JPanel info = new JPanel();
         info.setOpaque(false);
+        JLabel instructions = new JLabel("<html><div style='text-align: center;'>You and your opponent will alternate turns placing bombs to try and hit each other's ship<br>The first one to find the other's ship wins</div></html>");
+        instructions.setFont(new Font("Arial", Font.PLAIN, 25));
+        info.add(instructions);
         add(info, BorderLayout.CENTER);
 
 

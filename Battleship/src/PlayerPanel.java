@@ -10,8 +10,8 @@ public class PlayerPanel extends JPanel {
     private String player;
     private JPanel player1Panel;
     private JPanel player2Panel;
-    //public CellState player1Ship;
-    //public CellState player2Ship;
+    //public GameBoard player1Board;
+    //public GameBoard player2Board;
 
 
 
