@@ -10,6 +10,7 @@ public class PlayerPanel extends JPanel {
     private String player;
     private JPanel player1Panel;
     private JPanel player2Panel;
+    public GamePanel.GamePhase currentPhase = GamePanel.GamePhase.PLAYER1_PLACE_SHIP;
     //public GameBoard player1Board;
     //public GameBoard player2Board;
 
@@ -40,7 +41,7 @@ public class PlayerPanel extends JPanel {
 
         // board
         JPanel boardPanel = new JPanel();
-        GameBoard board = new GameBoard();
+        GameBoard board = new GameBoard(currentPhase);
         boardPanel.add(board);
         boardPanel.setOpaque(false);
         add(boardPanel, BorderLayout.CENTER);
@@ -57,6 +58,7 @@ public class PlayerPanel extends JPanel {
             submit.addMouseListener(new ConfirmMouseListener());
             buttonPanel.add(submit);
             add(buttonPanel, BorderLayout.SOUTH);
+            currentPhase = GamePanel.GamePhase.PLAYER2_PLACE_SHIP;
         } else {
             player2Panel = this;
             // battle button
@@ -65,6 +67,7 @@ public class PlayerPanel extends JPanel {
             battle.addMouseListener(new ConfirmMouseListener());
             buttonPanel.add(battle);
             add(buttonPanel, BorderLayout.SOUTH);
+            currentPhase = GamePanel.GamePhase.PLAYER1_BATTLE;
         }
     }
 

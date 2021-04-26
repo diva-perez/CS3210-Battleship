@@ -33,7 +33,7 @@ public class GamePanel extends JPanel {
     /**
      * 5 game phases
      */
-    private enum GamePhase {
+    public enum GamePhase {
         PLAYER1_PLACE_SHIP, PLAYER2_PLACE_SHIP, PLAYER1_BATTLE, PLAYER2_BATTLE, GAME_OVER
     }
 }

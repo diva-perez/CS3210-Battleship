@@ -36,6 +36,7 @@ public class WaitPanel extends JPanel {
         @Override
         public void mouseClicked(MouseEvent e) {
             frame.place(player);
+
         }
     }
 }
