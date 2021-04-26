@@ -1,40 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 
 public class Cell extends JButton {
     private CellState cellState = CellState.OCEAN;
     private Cell cell;
-    private Color pressedBackgroundColor;
     public Cell() {
-        super.setContentAreaFilled(false);
         cell = this;
         setPreferredSize(new Dimension(50, 50));
         setBackground(Color.BLUE);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        if (getModel().isPressed()) {
-            g.setColor(pressedBackgroundColor);
-        } else {
-            g.setColor(getBackground());
-        }
-        g.fillRect(0, 0, getWidth(), getHeight());
-        super.paintComponent(g);
-    }
-
-    @Override
-    public void setContentAreaFilled(boolean b) {
-    }
-
-    public Color getPressedBackgroundColor() {
-        return pressedBackgroundColor;
-    }
-
-    public void setPressedBackgroundColor(Color pressedBackgroundColor) {
-        this.pressedBackgroundColor = pressedBackgroundColor;
     }
 
     /**
@@ -50,6 +24,9 @@ public class Cell extends JButton {
 
     /**
      * Places a ship on a cell
+     *
+     * Still need to implement a check that limits the number of ships to one (or variable for later)
+     *
      */
     public void placeShip() {
         this.cellState = CellState.SHIP_VISIBLE;
@@ -57,7 +34,8 @@ public class Cell extends JButton {
     }
 
     /**
-     * Hides a ship if there is one
+     * Hides ship tile if there is one
+     * for game play
      */
     public void hideShip() {
         if (this.cellState == CellState.SHIP_VISIBLE) {

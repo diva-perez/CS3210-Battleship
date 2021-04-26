@@ -27,6 +27,8 @@ public class GamePanel extends JPanel {
         titlePanel.add(subtitle);
         add(titlePanel, BorderLayout.NORTH);
 
+        // player board
+
     }
 
 

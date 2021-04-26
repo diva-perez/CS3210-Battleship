@@ -50,6 +50,11 @@ public class PlayerPanel extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 25, 0));
+        /*
+        * two buttons to control rotation to the next phase
+        * player 1 is always followed by player 2
+        * player 2 is always followed by player 1
+         */
         if (player == "PLAYER 1") {
             player1Panel = this;
             // submit button
