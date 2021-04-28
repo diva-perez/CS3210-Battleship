@@ -4,6 +4,7 @@ import java.awt.*;
 public class GamePanel extends JPanel {
     private MainWindow frame;
     private String player;
+
     public GamePanel(String player, MainWindow frame) {
         this.frame = frame;
         // this.player = player;
@@ -28,7 +29,8 @@ public class GamePanel extends JPanel {
         add(titlePanel, BorderLayout.NORTH);
 
         // player board
-
+        // if statement : display enemy board
+        //setPhase() for player turns
     }
 
 

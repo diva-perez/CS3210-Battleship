@@ -7,6 +7,7 @@ public class WaitPanel extends JPanel {
     private MainWindow frame;
     private JPanel wait;
     private String player;
+    public GamePanel.GamePhase currentPhase;
 
     /**
      *  waiting screen that will display the current players turn and wait for a mouse click to continue
@@ -35,7 +36,13 @@ public class WaitPanel extends JPanel {
     private class StartMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            frame.place(player);
+            if //getPhase()) {
+                //battle
+                //display enemy board
+
+            } else {
+                frame.place(player);
+            }
 
         }
     }

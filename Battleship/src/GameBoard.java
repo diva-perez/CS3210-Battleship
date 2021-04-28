@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class GameBoard extends JPanel{
+public class GameBoard extends JPanel {
     public GamePanel.GamePhase phase;
+
     public GameBoard(GamePanel.GamePhase phase) {
         this.phase = phase;
         setLayout(new GridLayout(10, 10));
@@ -16,19 +17,22 @@ public class GameBoard extends JPanel{
                     case PLAYER2_PLACE_SHIP:
                         cell.placeShip();
                         cell.grabFocus();
+                        //setPhase()
                         break;
                     case PLAYER1_BATTLE:
                     case PLAYER2_BATTLE:
+                        cell.hideShip();
                         cell.dropBomb();
+                        //setPhase()
                         break;
                     case GAME_OVER:
                         //end game scenario
+                        //setPhase()
                         break;
                 }
             });
+
         }
-
-
     }
-
 }
+
