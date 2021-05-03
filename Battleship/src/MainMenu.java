@@ -4,14 +4,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MainMenu extends JPanel {
-    private MainWindow frame;
+    private static MainWindow frame;
     private JButton start;
     private JButton instruction;
-    private String player = "PLAYER 1";
-    public JPanel menu;
 
     public MainMenu(MainWindow frame) {
-        menu = this;
         this.frame = frame;
         setOpaque(false);
         setLayout(new BorderLayout());
@@ -20,11 +17,10 @@ public class MainMenu extends JPanel {
         JLabel title = new JLabel("BATTLESHIP", SwingConstants.CENTER);
         title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
-        add(title, BorderLayout.NORTH);
+        add(BorderLayout.NORTH, title);
 
-
-        // start button
-        start = new JButton("Start Game");
+        // start normal battleship
+        start = new JButton("Normal Game");
         start.setFont(new Font("Arial", Font.PLAIN, 40));
         start.setAlignmentX(Component.CENTER_ALIGNMENT);
         start.addMouseListener(new StartMouseListener());
@@ -48,9 +44,9 @@ public class MainMenu extends JPanel {
     private class StartMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            JPanel caller = null;
-            if (e.getSource() == start){ caller = menu;}
-            frame.wait(caller, player);
+            setVisible(false);
+            frame.startPlacement();
+
         }
 
         @Override
@@ -69,6 +65,7 @@ public class MainMenu extends JPanel {
         @Override
         public void mouseClicked(MouseEvent e) {
             frame.startInstructions();
+            setVisible(false);
         }
 
         @Override
@@ -84,4 +81,3 @@ public class MainMenu extends JPanel {
         }
     }
 }
-
