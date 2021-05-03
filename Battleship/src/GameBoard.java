@@ -2,10 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameBoard extends JPanel {
-    public GamePanel.GamePhase phase;
+    public MainWindow.GamePhase phase;
 
-    public GameBoard(GamePanel.GamePhase phase) {
-        this.phase = phase;
+    public GameBoard() {
+        this.phase = MainWindow.getPhase();
         setLayout(new GridLayout(10, 10));
         for (int i = 0; i < 100; i++) {
             Cell cell = (new Cell());

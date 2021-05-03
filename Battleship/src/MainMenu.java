@@ -7,7 +7,6 @@ public class MainMenu extends JPanel {
     private MainWindow frame;
     private JButton start;
     private JButton instruction;
-    private String player = "PLAYER 1";
     public JPanel menu;
 
     public MainMenu(MainWindow frame) {
@@ -50,7 +49,7 @@ public class MainMenu extends JPanel {
         public void mouseClicked(MouseEvent e) {
             JPanel caller = null;
             if (e.getSource() == start){ caller = menu;}
-            frame.wait(caller, player);
+            frame.wait(caller);
         }
 
         @Override

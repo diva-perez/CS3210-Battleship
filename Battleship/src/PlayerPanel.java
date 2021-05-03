@@ -7,15 +7,13 @@ public class PlayerPanel extends JPanel {
     private MainWindow frame;
     private JButton submit;
     private JButton battle;
-    private String player;
     private JPanel player1Panel;
     private JPanel player2Panel;
-    public GamePanel.GamePhase currentPhase = GamePanel.GamePhase.PLAYER1_PLACE_SHIP;   //setPhase()
+    private GameBoard board;
 
 
-    public PlayerPanel(String player, MainWindow frame) {
+    public PlayerPanel(MainWindow frame) {
         this.frame = frame;
-        this.player = player;
         setFocusable(true);
         setOpaque(false);
         setLayout(new BorderLayout());
@@ -24,7 +22,7 @@ public class PlayerPanel extends JPanel {
         JPanel titlePanel = new JPanel();
         titlePanel.setOpaque(false);
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
-        JLabel title = new JLabel(player, SwingConstants.CENTER);
+        JLabel title = new JLabel("PLAYER X", SwingConstants.CENTER);
         title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 5, 0));
         title.setAlignmentX(CENTER_ALIGNMENT);
@@ -38,8 +36,8 @@ public class PlayerPanel extends JPanel {
 
         // board
         JPanel boardPanel = new JPanel();
-        GameBoard board = new GameBoard(currentPhase);
-        boardPanel.add(board);
+        this.board = new GameBoard();
+        boardPanel.add(this.board);
         boardPanel.setOpaque(false);
         add(boardPanel, BorderLayout.CENTER);
 
@@ -52,7 +50,7 @@ public class PlayerPanel extends JPanel {
         * player 1 is always followed by player 2
         * player 2 is always followed by player 1
          */
-        if (player == "PLAYER 1") {
+        if (MainWindow.getPhase() == MainWindow.GamePhase.PLAYER1_PLACE_SHIP) {
             player1Panel = this;
             // submit button
             submit = new JButton("Submit");
@@ -60,16 +58,16 @@ public class PlayerPanel extends JPanel {
             submit.addMouseListener(new ConfirmMouseListener());
             buttonPanel.add(submit);
             add(buttonPanel, BorderLayout.SOUTH);
-            currentPhase = GamePanel.GamePhase.PLAYER2_PLACE_SHIP;  //setPhase()
         } else {
             player2Panel = this;
             // battle button
-            battle = new JButton("Submit");
+            battle = new JButton("Continue to Battle");
             battle.setFont(new Font("Arial", Font.PLAIN, 40));
             battle.addMouseListener(new ConfirmMouseListener());
             buttonPanel.add(battle);
             add(buttonPanel, BorderLayout.SOUTH);
-            currentPhase = GamePanel.GamePhase.PLAYER1_BATTLE;  //setPhase()
+            MainWindow.setPhase(MainWindow.GamePhase.PLAYER1_BATTLE);
+            System.out.println("Player 2 has placed ships");
         }
 
     }
@@ -81,12 +79,15 @@ public class PlayerPanel extends JPanel {
             JPanel caller = null;
             if (e.getSource() == submit) {
                 caller = player1Panel;
-                player = "PLAYER 2";
-                frame.wait(caller, player);
-            }
-            if (e.getSource() == battle) {
+                MainWindow.setPhase(MainWindow.GamePhase.PLAYER2_PLACE_SHIP);
+                MainWindow.setPlayer1Board(board);
+                System.out.println("Player 1 has placed ships");
+                frame.wait(caller);
+            }else if (e.getSource() == battle) {
                 caller = player2Panel;
-                player = "PLAYER 1";
+                MainWindow.setPhase(MainWindow.GamePhase.PLAYER1_BATTLE);
+                MainWindow.setPlayer2Board(board);
+                System.out.println("Player 2 has placed ships; Battle");
                 frame.startBattle();
             }
         }
