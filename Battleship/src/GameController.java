@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class GameController {
     private Game game;
-    private Object phase = Game.getPhase();
+    private Object phase = MainWindow.game.getPhase();
 
     public GameController() {
         this.game = new Game();

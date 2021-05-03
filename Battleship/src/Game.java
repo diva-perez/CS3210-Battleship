@@ -3,25 +3,30 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class Game {
+    private MainWindow frame;
     public ArrayList<Player> players;
-    public Player current;
+    public Player current = new Player("Player One");
     public Player inactive;
-    public static GamePhase phase;
+    public GamePhase phase;
     public Optional<Player> winner;
 
     public Game() {
-        this.current = new Player("Player One");
         this.inactive = new Player("Player Two");
         this.players = new ArrayList<>(
-                Arrays.asList(this.current, this.inactive));
-        Game.phase = GamePhase.PLACING;
+                Arrays.asList(current, this.inactive));
+        this.phase = GamePhase.PLACING;
         this.winner = null;
 
     }
 
-    public static GamePhase getPhase() {
-        return phase;
+    // Get methods
+    public Player getCurrent() {
+        return this.current;
     }
+    public GamePhase getPhase() {
+        return this.phase;
+    }
+
     public boolean allPlayersShipsPlaced() {
         for (Player p : this.players) {
             if(p.allShipsPlaced()) {
@@ -33,25 +38,25 @@ public class Game {
 
     public void endTurn() {
         // check if win condition is met
-        if (Game.phase == GamePhase.BATTLING && (this.inactive.unsunkShips()).size() == 0) {
-            Game.phase = GamePhase.END;
+        if (this.phase == GamePhase.BATTLING && (this.inactive.unsunkShips()).size() == 0) {
+            this.phase = GamePhase.END;
             this.winner = Optional.ofNullable(this.current);
         }
         // should enter battle phase (from PLACING)
-        else if (Game.phase == GamePhase.PLACING && this.allPlayersShipsPlaced()) {
-            Game.phase = GamePhase.BATTLING;
+        else if (this.phase == GamePhase.PLACING && this.allPlayersShipsPlaced()) {
+            this.phase = GamePhase.BATTLING;
             for (Player p : this.players) {
                 p.hideShips();
             }
         }
         // switch turns
-        Player temp = this.current;
-        this.current = this.inactive;
+        Player temp = current;
+        current = this.inactive;
         this.inactive = temp;
     }
 
     public void placeShip(Coordinate coordinates, Orientation orientation) {
-        assert Game.phase == GamePhase.PLACING;
+        assert this.phase == GamePhase.PLACING;
         this.current.placeNextShip(coordinates, orientation);
         if (this.current.allShipsPlaced()) {
             this.endTurn();
