@@ -20,7 +20,7 @@ public class InstructionPanel extends JPanel {
 
         // instructions
         JPanel info = new JPanel();
-        info.setOpaque(false);
+        info.setBackground(new Color(255, 255, 255, 100));
         JLabel instructions = new JLabel("<html><div style='text-align: center;'>You and your opponent will alternate turns placing bombs to try and hit each other's ship<br>The first one to find the other's ship wins</div></html>");
         instructions.setFont(new Font("Arial", Font.PLAIN, 25));
         info.add(instructions);
@@ -42,7 +42,7 @@ public class InstructionPanel extends JPanel {
     private class BackMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            frame.endTurn();
+            frame.mainMenu();
             setVisible(false);
         }
 

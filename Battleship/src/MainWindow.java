@@ -6,8 +6,9 @@ public class MainWindow extends JFrame {
     private PlacementPanel placement = new PlacementPanel(this);
     private InstructionPanel instructions = new InstructionPanel(this);
     private SettingPanel settings = new SettingPanel(this);
-    public GameBoard board = new GameBoard();
     public static Game game = new Game();
+    public GameBoard board = new GameBoard(game);
+    public static GameController controller = new GameController(game);
 
     public MainWindow() {
         super("Battleship");
@@ -45,7 +46,8 @@ public class MainWindow extends JFrame {
 
     public void endTurn() {
         game.endTurn();
-        // System.out.println(game.getCurrent());
+        System.out.println(game.getCurrent());
+        System.out.println(game.getPhase());
     }
 
     public static void main(String[] args) {

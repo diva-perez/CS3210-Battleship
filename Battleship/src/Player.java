@@ -17,8 +17,8 @@ public class Player {
     public Player(String name) {
         this.name = name;
         this.unplacedShipLengths = Settings.SHIP_LENGTHS;
-        this.ships = new ArrayList();
-        this.guesses = new ArrayList();
+        this.ships = new ArrayList<>();
+        this.guesses = new ArrayList<>();
     }
 
     public String toString() {

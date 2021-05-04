@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class Game {
-    private MainWindow frame;
     public ArrayList<Player> players;
     public Player current = new Player("Player One");
     public Player inactive;

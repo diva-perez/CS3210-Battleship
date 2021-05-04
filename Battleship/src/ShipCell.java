@@ -1,15 +1,14 @@
-import javax.swing.*;
 import java.awt.*;
 
-public class ShipCell extends JButton {
+public class ShipCell extends Cell{
     public ShipCellState state;
     public Coordinate coordinates;
 
     public ShipCell(Coordinate coordinate) {
-        this.coordinates = coordinate;
+        super(coordinate);
         this.state = ShipCellState.PLACED;
-        setPreferredSize(new Dimension(50, 50));
-        setBackground(Color.BLUE);
+        setBackground(Color.GRAY);
+
     }
 
     public String toString() {

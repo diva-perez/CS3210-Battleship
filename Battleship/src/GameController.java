@@ -7,18 +7,17 @@ public class GameController {
     private Game game;
     private Object phase = MainWindow.game.getPhase();
 
-    public GameController() {
-        this.game = new Game();
+    public GameController(Game game) {
+        this.game = game;
     }
 
-    public void start() {
-        while (GamePhase.END != this.phase) {
+    /*public void start() {
+        while (this.phase != GamePhase.END) {
             getBattleDisplay();
-            if (GamePhase.PLACING == this.phase) {
+            if (this.phase == GamePhase.PLACING) {
                 Object[] shipPlacement = this.getShipPlacement();
                 this.game.placeShip((Coordinate) shipPlacement[0], (Orientation) shipPlacement[1]);
             } else {
-                //GUI battle display
                 Coordinate coords = this.getFiringCoordinates();
                 boolean scored = this.game.fire(coords);
                 if (scored) {
@@ -28,7 +27,7 @@ public class GameController {
                 }
             }
         }
-    }
+    }*/
 
     public Coordinate parseCoords(String coordString) {
         String[] arrOfStr = coordString.split(",", 2);
@@ -42,7 +41,7 @@ public class GameController {
         return parseCoords(coord);
     }
 
-    public Object[] getShipPlacement() {
+    /*public Object[] getShipPlacement() {
         int length = this.game.current.nextUnplacedShipLength();
         Scanner scanner = new Scanner(System.in);
         System.out.printf("Choose top/left cell to place ship (length = %s)\n", length);
@@ -59,7 +58,7 @@ public class GameController {
             orientation = Orientation.VERTICAL;
         }
         return new Object[]{coords, orientation};
-    }
+    }*/
 
     public void getBattleDisplay() {
         Set<Coordinate> guesses = new HashSet(Arrays.asList(this.game.current.guesses));
