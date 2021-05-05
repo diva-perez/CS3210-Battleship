@@ -4,7 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class InstructionPanel extends JPanel {
-    private MainWindow frame;
+    private static MainWindow frame;
     private JButton back;
 
     public InstructionPanel(MainWindow frame) {
@@ -16,15 +16,15 @@ public class InstructionPanel extends JPanel {
         JLabel title = new JLabel("INSTRUCTIONS", SwingConstants.CENTER);
         title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
-        add(title, BorderLayout.NORTH);
+        add(BorderLayout.NORTH, title);
 
         // instructions
         JPanel info = new JPanel();
-        info.setOpaque(false);
+        info.setBackground(new Color(255, 255, 255, 100));
         JLabel instructions = new JLabel("<html><div style='text-align: center;'>You and your opponent will alternate turns placing bombs to try and hit each other's ship<br>The first one to find the other's ship wins</div></html>");
         instructions.setFont(new Font("Arial", Font.PLAIN, 25));
         info.add(instructions);
-        add(info, BorderLayout.CENTER);
+        add(BorderLayout.CENTER, info);
 
 
         // back button
@@ -36,13 +36,14 @@ public class InstructionPanel extends JPanel {
         back.setFont(new Font("Arial", Font.PLAIN, 40));
         back.addMouseListener(new BackMouseListener());
         buttonPanel.add(back);
-        add(buttonPanel, BorderLayout.SOUTH);
+        add(BorderLayout.SOUTH, buttonPanel);
     }
 
     private class BackMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
             frame.mainMenu();
+            setVisible(false);
         }
 
         @Override

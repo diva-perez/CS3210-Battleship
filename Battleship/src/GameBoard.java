@@ -1,38 +1,166 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class GameBoard extends JPanel {
-    public MainWindow.GamePhase phase;
+    public Coordinate coordinateFocus;
+    public Orientation orientation = Orientation.VERTICAL;
+    public Game game;
+    public Cell[] cells;
+    public int length;
 
-    public GameBoard() {
-        this.phase = MainWindow.getPhase();
-        setLayout(new GridLayout(10, 10));
-        for (int i = 0; i < 100; i++) {
-            Cell cell = (new Cell());
-            add(cell);
-            cell.addActionListener(e -> {
+    public GameBoard(Game game) {
+        setLayout(new BorderLayout());
+        setOpaque(false);
+        // title
+        JLabel title = new JLabel(MainWindow.game.getCurrent().toString(), SwingConstants.CENTER);
+        title.setOpaque(false);
+        title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
+        title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
+        add(title, BorderLayout.NORTH);
 
-                switch (phase) {
-                    case PLAYER1_PLACE_SHIP:
-                    case PLAYER2_PLACE_SHIP:
-                        cell.placeShip();
-                        cell.grabFocus();
-                        //setPhase()
-                        break;
-                    case PLAYER1_BATTLE:
-                    case PLAYER2_BATTLE:
-                        cell.hideShip();
-                        cell.dropBomb();
-                        //setPhase()
-                        break;
-                    case GAME_OVER:
-                        //end game scenario
-                        //setPhase()
-                        break;
-                }
-            });
-
+        JPanel gamePanel = new JPanel();
+        this.game = game;
+        gamePanel.setLayout(new GridLayout(10, 10));
+        gamePanel.setOpaque(false);
+        this.cells = new Cell[100];
+        for (int y = 0; y < Settings.MAX_Y; y++) {
+            for (int x = 0; x < Settings.MAX_X; x++) {
+                Cell cell = (new Cell(new Coordinate(x, y)));
+                this.cells[y * 10 + x] = cell;
+                cell.addActionListener(e -> {
+                    coordinateFocus = cell.getCoord();
+                    System.out.println(coordinateFocus);
+                    game.placeShip(coordinateFocus, orientation);
+                    title.setText(game.getCurrent().toString());
+                    updateGUI();
+                });
+                cell.addMouseListener(new MouseAdapter() {
+                    public void mouseEntered(MouseEvent e) {
+                        updateUI();
+                    }
+                    public void mouseExited(MouseEvent e) {
+                        updateUI();
+                    }
+                });
+                gamePanel.add(cell);
+            }
         }
+        add(gamePanel);
+    }
+
+    public void updateGUI() {
+        Color invalidHighlight = Color.ORANGE;
+        Color validHighlight = Color.GREEN;
+        Color ship = Color.GRAY;
+        Color ocean = Color.BLUE;
+        Color hit = Color.RED;
+        Color miss = Color.WHITE;
+        Color fog = Color.BLUE;
+
+        Game.GamePhase currentPhase = game.getPhase();
+        ArrayList<Coordinate> highlights = this.getHighlightedCoords();
+        for (Cell cell : this.cells) {
+            Coordinate currentCoord = cell.getCoord();
+
+            // boolean conditions for cell coloring
+            boolean hasMyShip = game.current.hasShipAtCoord(currentCoord);
+            boolean hasEnemyShip = game.inactive.hasShipAtCoord(currentCoord);
+            boolean placing = game.getPhase() == Game.GamePhase.PLACING;
+            boolean isHighlighted = highlights.contains(currentCoord);
+            boolean battling = game.getPhase() == Game.GamePhase.BATTLING;
+            boolean isVisible = game.current.guesses.contains(currentCoord);
+            boolean validBattlingHighlight = !isVisible;
+            boolean shipFitsOnBoard = highlights.size() == game.current.nextUnplacedShipLength();
+            boolean allHighlightedEmpty = true;
+            for (Coordinate coordinates : highlights) {
+                // if there is a ship at that coordinate, valid = false
+                allHighlightedEmpty = allHighlightedEmpty && !(game.current.allShipCoordinates().contains(coordinates));
+            }
+            boolean validPlacingHighlight = shipFitsOnBoard && allHighlightedEmpty;
+
+            // check conditions
+            Color chosenColor = Color.BLUE;
+            if (placing && isHighlighted && validPlacingHighlight) {
+                chosenColor = validHighlight;
+            }
+            if (placing && isHighlighted && !validPlacingHighlight) {
+                chosenColor = invalidHighlight;
+            }
+            if (placing && isHighlighted && hasMyShip) {
+                chosenColor = ship;
+            }
+            if (placing && isHighlighted && !hasMyShip) {
+                chosenColor = ocean;
+            }
+            if (battling && isVisible && hasEnemyShip) {
+                chosenColor = hit;
+            }
+            if (battling && isVisible && !hasEnemyShip) {
+                chosenColor = miss;
+            }
+            if (battling && !isVisible) {
+                chosenColor = fog;
+            }
+            cell.setBackground(chosenColor);
+        }
+    }
+
+    private ArrayList<Coordinate> getHighlightedCoords() {
+        int highlightLength = game.current.nextUnplacedShipLength();
+        ArrayList<Coordinate> highlights = new ArrayList<>();
+        while (highlightLength > 0) {
+            Coordinate next = coordinateFocus.getEndFrom(highlightLength, orientation);
+            highlights.add(next);
+            highlightLength --;
+            if (!next.onBoard()) {
+                break;
+            }
+        }
+        return highlights;
     }
 }
 
+    /*public GameBoard(Game game) {
+        setLayout(new BorderLayout());
+        setOpaque(false);
+        // title
+        JLabel title = new JLabel(MainWindow.game.getCurrent().toString(), SwingConstants.CENTER);
+        title.setOpaque(false);
+        title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
+        title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
+        add(title, BorderLayout.NORTH);
+
+        JPanel gamePanel = new JPanel();
+        this.game = game;
+        gamePanel.setLayout(new GridLayout(10, 10));
+        gamePanel.setOpaque(false);
+
+        for (int y = 1; y <= Settings.MAX_Y; y++) {     // + 1 to get all the tiles to paint
+            for (int x = 0; x < Settings.MAX_X; x++) {
+                this.cell = (new Cell(new Coordinate(x, y)));
+                this.cell.addActionListener(e -> {
+                    coordinate = cell.getCoord();
+                    System.out.println(coordinate);
+                    game.placeShip(coordinate, orientation);
+                    title.setText(game.getCurrent().toString());
+                    updateGUI();
+                });
+                this.cell.addMouseListener(new MouseAdapter() {
+                    public void mouseEntered(MouseEvent e) {
+                        coordinate = cell.getCoord();
+                        System.out.println(coordinate);
+                        updateGUI();
+                    }
+
+                    public void mouseExited(MouseEvent e) {
+                        updateGUI();
+                    }
+                });
+                gamePanel.add(cell);
+            }
+            add(BorderLayout.CENTER, gamePanel);
+        }
+    }*/
