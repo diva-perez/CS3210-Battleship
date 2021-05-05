@@ -3,12 +3,10 @@ import java.awt.*;
 
 public class MainWindow extends JFrame {
     private MainMenu menu = new MainMenu(this);
-    private PlacementPanel placement = new PlacementPanel(this);
     private InstructionPanel instructions = new InstructionPanel(this);
     private SettingPanel settings = new SettingPanel(this);
     public static Game game = new Game();
     public GameBoard board = new GameBoard(game);
-    public static GameController controller = new GameController(game);
 
     public MainWindow() {
         super("Battleship");
@@ -37,17 +35,10 @@ public class MainWindow extends JFrame {
 
     public void startPlacement() {
         JPanel boardPanel = new JPanel();
-        boardPanel.add(board);  // board needs to be on it's own panel to appear like a square rather than encompass the whole width of the screen
+        boardPanel.add(board);
         boardPanel.setOpaque(false);
-        placement.add(BorderLayout.CENTER, boardPanel);
-        add(placement);
+        add(boardPanel);
         setVisible(true);
-    }
-
-    public void endTurn() {
-        game.endTurn();
-        System.out.println(game.getCurrent());
-        System.out.println(game.getPhase());
     }
 
     public static void main(String[] args) {

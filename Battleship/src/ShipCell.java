@@ -1,14 +1,12 @@
-import java.awt.*;
 
-public class ShipCell extends Cell{
+
+public class ShipCell{
     public ShipCellState state;
     public Coordinate coordinates;
 
     public ShipCell(Coordinate coordinate) {
-        super(coordinate);
+        this.coordinates = coordinate;
         this.state = ShipCellState.PLACED;
-        setBackground(Color.GRAY);
-
     }
 
     public String toString() {

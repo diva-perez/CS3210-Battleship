@@ -36,6 +36,7 @@ public class Game {
     }
 
     public void endTurn() {
+        System.out.println("Current player:" + this.current.toString() + "\nInactive Player:" + this.inactive.toString());
         // check if win condition is met
         if (this.phase == GamePhase.BATTLING && (this.inactive.unsunkShips()).size() == 0) {
             this.phase = GamePhase.END;
@@ -49,8 +50,8 @@ public class Game {
             }
         }
         // switch turns
-        Player temp = current;
-        current = this.inactive;
+        Player temp = this.current;
+        this.current = this.inactive;
         this.inactive = temp;
     }
 

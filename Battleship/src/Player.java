@@ -2,21 +2,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Player {
-    public int NEXT_UNPLACED_INDEX = -1;
-    /* 0 to start from the head
-     * -1 to start from the tail
-     * helps with removing elements from the same end that we read from
-     */
     public ArrayList<Integer> unplacedShipLengths;
     public ArrayList<Ship> ships;
     public String name;
     public ArrayList<Coordinate> guesses;
     public ArrayList<Coordinate> hitList;
     public ArrayList<Coordinate> missList;
+    public int NEXT_UNPLACED_INDEX = 0;
+    /* 0 to start from the head
+     * helps with removing elements from the same end that we read from
+     */
 
     public Player(String name) {
         this.name = name;
-        this.unplacedShipLengths = Settings.SHIP_LENGTHS;
+        this.unplacedShipLengths = new ArrayList<>(Settings.SHIP_LENGTHS);
         this.ships = new ArrayList<>();
         this.guesses = new ArrayList<>();
     }
@@ -68,7 +67,7 @@ public class Player {
 
     public void placeNextShip(Coordinate start, Orientation orientation) {
         int length = this.nextUnplacedShipLength();
-        assert length >= 2 : "Ships cannot be smaller than size 2";
+        assert length >= 1 : "Ships cannot be smaller than size 1";
         Coordinate end = start.getEndFrom(length, orientation);
         assert start.onBoard() : "Start coordinate not valid";
         assert end.onBoard() : "End coordinate not valid";
@@ -80,6 +79,7 @@ public class Player {
 
         }
         this.unplacedShipLengths.remove(this.NEXT_UNPLACED_INDEX);
+        this.ships.add(new Ship(start, orientation, length));
     }
 
     public boolean checkShipsHit(Coordinate coords) {
@@ -108,11 +108,12 @@ public class Player {
         return cells;
     }
 
-    public Coordinate allShipCoordinates() {
+    public ArrayList<Coordinate> allShipCoordinates() {
+        ArrayList<Coordinate> arr = new ArrayList<Coordinate>();
         for (ShipCell c : this.allShipCells()) {
-            return c.coordinates;
+            arr.add(c.coordinates);
         }
-        return null;
+        return arr;
     }
 
     public Coordinate hitShipCoordinates() {
@@ -122,5 +123,15 @@ public class Player {
             }
         }
         return null;
+    }
+
+    public boolean hasShipAtCoord(Coordinate coord) {
+        for (Coordinate coordinate : this.allShipCoordinates()) {
+            if (coord.equals(coordinate)) {
+                //System.out.println(this.allShipCoordinates());
+                return true;
+            }
+        }
+        return false;
     }
 }
