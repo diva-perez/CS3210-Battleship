@@ -9,7 +9,7 @@ public class Settings {
     public static int BOARD_HEIGHT = 10;
     public static int MAX_X = BOARD_WIDTH;
     public static int MAX_Y = BOARD_HEIGHT;
-    static ArrayList<Integer> SHIP_LENGTHS = new ArrayList<Integer>(
+    public static ArrayList<Integer> SHIP_LENGTHS = new ArrayList<Integer>(
             Arrays.asList(1, 1));
 
     public Settings() {
@@ -31,6 +31,10 @@ public class Settings {
     // set bomb size
     public void bombSize(int size) {
 
+    }
+
+    public static int getBombSize() {
+        return 1;
     }
 
     public static ArrayList<Integer> getShipList(){

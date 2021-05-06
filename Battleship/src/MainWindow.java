@@ -34,6 +34,7 @@ public class MainWindow extends JFrame {
     }
 
     public void startPlacement() {
+        System.out.println("Current player:" + game.current.toString() + "\nInactive Player:" + game.inactive.toString());
         JPanel boardPanel = new JPanel();
         boardPanel.add(board);
         boardPanel.setOpaque(false);
