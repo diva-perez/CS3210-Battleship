@@ -42,7 +42,6 @@ public class GameBoard extends JPanel {
                 });
                 cell.addMouseListener(new MouseAdapter() {
                     public void mouseEntered(MouseEvent e) {
-                        coordinateFocus = cell.getCoord();
                         updateUI();
                     }
                     public void mouseExited(MouseEvent e) {
@@ -72,7 +71,7 @@ public class GameBoard extends JPanel {
         Color fog = Color.BLUE;
 
         Game.GamePhase currentPhase = game.getPhase();
-        //ArrayList<Coordinate> highlights = this.getHighlightedCoords();
+        ArrayList<Coordinate> highlights;//this.getHighlightedCoords();
         for (Cell cell : this.cells) {
             Coordinate currentCoord = cell.getCoord();
 
@@ -80,17 +79,17 @@ public class GameBoard extends JPanel {
             boolean hasMyShip = game.current.hasShipAtCoord(currentCoord);
             boolean hasEnemyShip = game.inactive.hasShipAtCoord(currentCoord);
             boolean placing = game.getPhase() == Game.GamePhase.PLACING;
-            boolean isHighlighted = highlights.contains(currentCoord);
+            boolean isHighlighted = coordinateFocus == currentCoord; //highlights.contains(currentCoord);
             boolean battling = game.getPhase() == Game.GamePhase.BATTLING;
             boolean isVisible = game.current.guesses.contains(currentCoord);
             boolean validBattlingHighlight = !isVisible;
-            boolean shipFitsOnBoard = highlights.size() == game.current.nextUnplacedShipLength();
+            //boolean shipFitsOnBoard = highlights.size() == game.current.nextUnplacedShipLength();
             boolean allHighlightedEmpty = true;
-            for (Coordinate coordinates : highlights) {
+            /*for (Coordinate coordinates : highlights) {
                 // if there is a ship at that coordinate, valid = false
                 allHighlightedEmpty = allHighlightedEmpty && !(game.current.allShipCoordinates().contains(coordinates));
             }
-            boolean validPlacingHighlight = shipFitsOnBoard && allHighlightedEmpty;
+            boolean validPlacingHighlight = shipFitsOnBoard && allHighlightedEmpty;*/
 
             // check conditions
             Color chosenColor = Color.BLUE;
