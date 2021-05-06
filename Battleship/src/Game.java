@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 public class Game {
@@ -11,10 +10,15 @@ public class Game {
 
     public Game() {
         this.inactive = new Player("Player Two");
-        this.players = new ArrayList<>(
-                Arrays.asList(current, this.inactive));
+        this.players = new ArrayList<>();
+        players.add(this.current);
+        players.add(this.inactive);
         this.phase = GamePhase.PLACING;
         this.winner = null;
+        System.out.println(players.toString());
+        System.out.println(this.current.unplacedShipLengths);
+        System.out.println(this.inactive.unplacedShipLengths);
+
 
     }
 
@@ -27,13 +31,24 @@ public class Game {
     }
 
     public boolean allPlayersShipsPlaced() {
+        boolean shipsPlaced = false;
         for (Player p : this.players) {
+            System.out.println(p);
             if(p.allShipsPlaced()) {
-                return true;
+                shipsPlaced = true;
             }
+            else {
+                shipsPlaced = false;
+            }
+                System.out.println(p.allShipsPlaced());
+                System.out.println(this.current.unplacedShipLengths);
+                System.out.println(this.inactive.unplacedShipLengths);
+                //return true;
+                // breaks out of loop and doesn't check player 2
+            }
+        return shipsPlaced;
         }
-        return false;
-    }
+
 
     public void endTurn() {
         System.out.println("Current player:" + this.current.toString() + "\nInactive Player:" + this.inactive.toString());

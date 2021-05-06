@@ -26,6 +26,8 @@ public class GameBoard extends JPanel {
         gamePanel.setLayout(new GridLayout(10, 10));
         gamePanel.setOpaque(false);
         this.cells = new Cell[100];
+
+        System.out.println("1" + game.getPhase());
         for (int y = 0; y < Settings.MAX_Y; y++) {
             for (int x = 0; x < Settings.MAX_X; x++) {
                 Cell cell = (new Cell(new Coordinate(x, y)));
@@ -35,6 +37,7 @@ public class GameBoard extends JPanel {
                     System.out.println(coordinateFocus);
                     game.placeShip(coordinateFocus, orientation);
                     title.setText(game.getCurrent().toString());
+                    System.out.println("2" + game.getPhase());
                     updateGUI();
                 });
                 cell.addMouseListener(new MouseAdapter() {
@@ -42,6 +45,8 @@ public class GameBoard extends JPanel {
                         updateUI();
                     }
                     public void mouseExited(MouseEvent e) {
+                        //if statement to check if a ship was just placed there?
+
                         updateUI();
                     }
                 });
@@ -51,9 +56,14 @@ public class GameBoard extends JPanel {
         add(gamePanel);
     }
 
+    /*
+    highlight method that will be active during
+
+     */
     public void updateGUI() {
-        Color invalidHighlight = Color.ORANGE;
-        Color validHighlight = Color.GREEN;
+        //Color invalidHighlight = Color.ORANGE;
+        //Color validHighlight = Color.GREEN;
+
         Color ship = Color.GRAY;
         Color ocean = Color.BLUE;
         Color hit = Color.RED;
@@ -61,7 +71,7 @@ public class GameBoard extends JPanel {
         Color fog = Color.BLUE;
 
         Game.GamePhase currentPhase = game.getPhase();
-        ArrayList<Coordinate> highlights = this.getHighlightedCoords();
+        ArrayList<Coordinate> highlights;//this.getHighlightedCoords();
         for (Cell cell : this.cells) {
             Coordinate currentCoord = cell.getCoord();
 
@@ -69,26 +79,26 @@ public class GameBoard extends JPanel {
             boolean hasMyShip = game.current.hasShipAtCoord(currentCoord);
             boolean hasEnemyShip = game.inactive.hasShipAtCoord(currentCoord);
             boolean placing = game.getPhase() == Game.GamePhase.PLACING;
-            boolean isHighlighted = highlights.contains(currentCoord);
+            boolean isHighlighted = coordinateFocus == currentCoord; //highlights.contains(currentCoord);
             boolean battling = game.getPhase() == Game.GamePhase.BATTLING;
             boolean isVisible = game.current.guesses.contains(currentCoord);
             boolean validBattlingHighlight = !isVisible;
-            boolean shipFitsOnBoard = highlights.size() == game.current.nextUnplacedShipLength();
+            //boolean shipFitsOnBoard = highlights.size() == game.current.nextUnplacedShipLength();
             boolean allHighlightedEmpty = true;
-            for (Coordinate coordinates : highlights) {
+            /*for (Coordinate coordinates : highlights) {
                 // if there is a ship at that coordinate, valid = false
                 allHighlightedEmpty = allHighlightedEmpty && !(game.current.allShipCoordinates().contains(coordinates));
             }
-            boolean validPlacingHighlight = shipFitsOnBoard && allHighlightedEmpty;
+            boolean validPlacingHighlight = shipFitsOnBoard && allHighlightedEmpty;*/
 
             // check conditions
             Color chosenColor = Color.BLUE;
-            if (placing && isHighlighted && validPlacingHighlight) {
+            /*if (placing && isHighlighted && validPlacingHighlight) {
                 chosenColor = validHighlight;
             }
             if (placing && isHighlighted && !validPlacingHighlight) {
                 chosenColor = invalidHighlight;
-            }
+            }*/
             if (placing && isHighlighted && hasMyShip) {
                 chosenColor = ship;
             }
@@ -101,26 +111,30 @@ public class GameBoard extends JPanel {
             if (battling && isVisible && !hasEnemyShip) {
                 chosenColor = miss;
             }
-            if (battling && !isVisible) {
+            if (battling && validBattlingHighlight) {
                 chosenColor = fog;
             }
             cell.setBackground(chosenColor);
         }
     }
 
-    private ArrayList<Coordinate> getHighlightedCoords() {
-        int highlightLength = game.current.nextUnplacedShipLength();
+    /*private ArrayList<Coordinate> getHighlightedCoords() {
         ArrayList<Coordinate> highlights = new ArrayList<>();
-        while (highlightLength > 0) {
-            Coordinate next = coordinateFocus.getEndFrom(highlightLength, orientation);
-            highlights.add(next);
-            highlightLength --;
-            if (!next.onBoard()) {
-                break;
+        if (game.getPhase() == Game.GamePhase.PLACING) {
+            int highlightLength = game.current.nextUnplacedShipLength();
+            while (highlightLength > 0) {
+                Coordinate next = coordinateFocus.getEndFrom(highlightLength, orientation);
+                highlights.add(next);
+                highlightLength--;
+                if (!next.onBoard()) {
+                    break;
+                }
             }
         }
+        else {
+        }
         return highlights;
-    }
+    }*/
 }
 
     /*public GameBoard(Game game) {
