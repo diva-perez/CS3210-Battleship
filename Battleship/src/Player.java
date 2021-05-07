@@ -18,6 +18,8 @@ public class Player {
         this.unplacedShipLengths = new ArrayList<>(Settings.SHIP_LENGTHS);
         this.ships = new ArrayList<>();
         this.guesses = new ArrayList<>();
+        this.hitList = new ArrayList<>();
+        this.missList = new ArrayList<>();
     }
 
     public String toString() {
@@ -88,8 +90,8 @@ public class Player {
                 hitList.add(coords);
                 return true;
             }
+            missList.add(coords);
         }
-        missList.add(coords);
         return false;
     }
 

@@ -28,16 +28,23 @@ public class GameBoard extends JPanel {
         this.cells = new Cell[100];
 
         System.out.println("1" + game.getPhase());
-        for (int y = 0; y < Settings.MAX_Y; y++) {
+        for (int y = 1; y < Settings.MAX_Y + 1; y++) {
             for (int x = 0; x < Settings.MAX_X; x++) {
                 Cell cell = (new Cell(new Coordinate(x, y)));
-                this.cells[y * 10 + x] = cell;
+                this.cells[(y - 1) * 10 + x] = cell;
                 cell.addActionListener(e -> {
                     coordinateFocus = cell.getCoord();
                     System.out.println(coordinateFocus);
-                    game.placeShip(coordinateFocus, orientation);
-                    title.setText(game.getCurrent().toString());
-                    System.out.println("2" + game.getPhase());
+                    // Action listener for PLACING
+                    if (game.getPhase() == Game.GamePhase.PLACING) {
+                        game.placeShip(coordinateFocus, orientation);
+                        title.setText(game.getCurrent().toString());
+                        // System.out.println("2" + game.getPhase());
+                    // Action listener for BATTLING
+                    } else {
+                        game.fire(coordinateFocus);
+                        title.setText(game.getCurrent().toString());
+                    }
                     updateGUI();
                 });
                 cell.addMouseListener(new MouseAdapter() {

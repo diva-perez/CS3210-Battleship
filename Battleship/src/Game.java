@@ -1,3 +1,5 @@
+import org.junit.Assert;
+
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -75,6 +77,7 @@ public class Game {
         this.current.placeNextShip(coordinates, orientation);
         if (this.current.allShipsPlaced()) {
             this.endTurn();
+            assert this.current.ships.contains(coordinates) : "player ships list is not correct";
         }
     }
 
