@@ -14,6 +14,7 @@ public class GameBoard extends JPanel {
     public GameBoard(Game game) {
         setLayout(new BorderLayout());
         setOpaque(false);
+
         // title
         JLabel title = new JLabel(MainWindow.game.getCurrent().toString(), SwingConstants.CENTER);
         title.setOpaque(false);
@@ -21,6 +22,7 @@ public class GameBoard extends JPanel {
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
         add(title, BorderLayout.NORTH);
 
+        // gameboard panel
         JPanel gamePanel = new JPanel();
         this.game = game;
         gamePanel.setLayout(new GridLayout(10, 10));
@@ -28,10 +30,10 @@ public class GameBoard extends JPanel {
         this.cells = new Cell[100];
 
         System.out.println("1" + game.getPhase());
-        for (int y = 1; y < Settings.MAX_Y + 1; y++) {
+        for (int y = 0; y < Settings.MAX_Y; y++) {
             for (int x = 0; x < Settings.MAX_X; x++) {
                 Cell cell = (new Cell(new Coordinate(x, y)));
-                this.cells[(y - 1) * 10 + x] = cell;
+                this.cells[y * 10 + x] = cell;
                 cell.addActionListener(e -> {
                     coordinateFocus = cell.getCoord();
                     System.out.println(coordinateFocus);
@@ -52,8 +54,6 @@ public class GameBoard extends JPanel {
                         updateUI();
                     }
                     public void mouseExited(MouseEvent e) {
-                        //if statement to check if a ship was just placed there?
-
                         updateUI();
                     }
                 });

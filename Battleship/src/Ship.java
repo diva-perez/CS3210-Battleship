@@ -1,32 +1,32 @@
 import java.util.ArrayList;
 
 public class Ship {
+    private Coordinate start;
+    private Orientation orientation;
     public int length = 0;
-    private static ArrayList<ShipCell> cells;
+    public ArrayList<ShipCell> cells;
 
     public Ship(Coordinate start, Orientation orientation, int length) {
+        this.start = start;
+        this.orientation = orientation;
         this.length = length;
-        this.setCells(new ArrayList());
+        this.cells = new ArrayList<>();
         for (int i = 1; i < length + 1; i++) {
             Coordinate newCoordinate = start.getEndFrom(i, orientation);
             ShipCell newCell = new ShipCell(newCoordinate);
-            this.getCells().add(newCell);
+            this.cells.add(newCell);
         }
     }
 
-    public static ArrayList<ShipCell> getCells() {
-        return cells;
-    }
-
-    public void setCells(ArrayList<ShipCell> cells) {
-        this.cells = cells;
+    public String toString() {
+        return this.start + "; " + this.orientation + "; " + this.length;
     }
 
     public boolean sunk() {
         /**
          * if all ShipCells have been hit
          */
-        for (ShipCell c : this.getCells()) {
+        for (ShipCell c : this.cells) {
             if (c.isHit()) {
                 return true;
             }
@@ -39,8 +39,8 @@ public class Ship {
          * return the ShipCell at coords if there is one
          * else None
          */
-        for (ShipCell cell : this.getCells()) {
-            if (cell.coordinates == coords) {
+        for (ShipCell cell : this.cells) {
+            if (cell.coordinates.equals(coords)) {
                 return cell;
             }
         }
@@ -53,7 +53,7 @@ public class Ship {
          */
         ShipCell cell = this.getCellAt(coord);
         if (cell != null) {
-            assert cell.isHidden() : cell;
+            assert cell.isHidden() : "Cell is not hidden";
             cell.takeHit();
             return true;
         }
@@ -64,7 +64,7 @@ public class Ship {
         /**
          * checks if this ship overlap otherShip
          */
-        for (ShipCell c : this.getCells()) {
+        for (ShipCell c : this.cells) {
             if (otherShip.getCellAt(c.coordinates) != null) {
                 return true;
             }
@@ -76,7 +76,7 @@ public class Ship {
         /**
          * set ShipCellState.hidden for all ShipCells belonging to this ship
          */
-        for (ShipCell c : this.getCells()) {
+        for (ShipCell c : this.cells) {
             c.hide();
         }
     }

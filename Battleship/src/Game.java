@@ -17,11 +17,8 @@ public class Game {
         players.add(this.inactive);
         this.phase = GamePhase.PLACING;
         this.winner = null;
-        System.out.println(players.toString());
-        System.out.println(this.current.unplacedShipLengths);
-        System.out.println(this.inactive.unplacedShipLengths);
-
-
+        System.out.println(this.current.toString() + ": " + this.current.unplacedShipLengths);
+        System.out.println(this.inactive.toString() + ": " + this.inactive.unplacedShipLengths);
     }
 
     // Get methods
@@ -42,11 +39,9 @@ public class Game {
             else {
                 shipsPlaced = false;
             }
-                System.out.println(p.allShipsPlaced());
-                System.out.println(this.current.unplacedShipLengths);
-                System.out.println(this.inactive.unplacedShipLengths);
-                //return true;
-                // breaks out of loop and doesn't check player 2
+            System.out.println(p.allShipsPlaced());
+            System.out.println(this.current.unplacedShipLengths);
+            System.out.println(this.inactive.unplacedShipLengths);
             }
         return shipsPlaced;
         }
@@ -76,8 +71,9 @@ public class Game {
         assert this.phase == GamePhase.PLACING;
         this.current.placeNextShip(coordinates, orientation);
         if (this.current.allShipsPlaced()) {
-            this.endTurn();
+            System.out.println(this.current.toString() + " player ship list: " + this.current.ships);
             assert this.current.ships.contains(coordinates) : "player ships list is not correct";
+            this.endTurn();
         }
     }
 
@@ -85,6 +81,7 @@ public class Game {
         assert !(this.current.guesses.contains(coordinates));
         this.current.guesses.add(coordinates);
         boolean didHit = this.inactive.checkShipsHit(coordinates);
+        System.out.println(this.current.toString() + " Player Guesses: " + this.current.guesses);
         this.endTurn();
         return didHit;
     }

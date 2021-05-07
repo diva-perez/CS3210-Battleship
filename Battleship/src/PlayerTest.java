@@ -1,7 +1,12 @@
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class PlayerTest {
+    Coordinate coordinate = new Coordinate(0,0);
+    Ship ship = new Ship(coordinate, Orientation.VERTICAL, 1);
+    Player player = new Player("test");
 
     @Test
     void hasGuessed() {
@@ -41,6 +46,14 @@ class PlayerTest {
 
     @Test
     void checkShipsHit() {
+        assertFalse(player.checkShipsHit(coordinate));
+        assertEquals(ship.getCellAt(coordinate).state, ShipCell.ShipCellState.PLACED);
+        player.ships.add(ship);
+        assertThrows(AssertionError.class, () -> player.checkShipsHit(coordinate));
+        ship.hide();
+        assertTrue(player.checkShipsHit(coordinate));
+        assertEquals(ship.getCellAt(coordinate).state, ShipCell.ShipCellState.HIT);
+        assertTrue(player.hitList.contains(coordinate));
     }
 
     @Test
