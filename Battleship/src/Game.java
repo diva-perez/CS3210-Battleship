@@ -8,7 +8,7 @@ public class Game {
     public Player current = new Player("Player One");
     public Player inactive;
     public GamePhase phase;
-    public Optional<Player> winner;
+    public Player winner;
 
     public Game() {
         this.inactive = new Player("Player Two");
@@ -52,7 +52,7 @@ public class Game {
         // check if win condition is met
         if (this.phase == GamePhase.BATTLING && (this.inactive.unsunkShips()).size() == 0) {
             this.phase = GamePhase.END;
-            this.winner = Optional.ofNullable(this.current);
+            this.winner = this.current;
         }
         // should enter battle phase (from PLACING)
         else if (this.phase == GamePhase.PLACING && this.allPlayersShipsPlaced()) {

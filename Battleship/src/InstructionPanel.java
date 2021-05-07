@@ -4,7 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class InstructionPanel extends JPanel {
-    private static MainWindow frame;
+    private MainWindow frame;
     private JButton back;
 
     public InstructionPanel(MainWindow frame) {
@@ -45,13 +45,11 @@ public class InstructionPanel extends JPanel {
             frame.mainMenu();
             setVisible(false);
         }
-
         @Override
         public void mouseEntered(MouseEvent e) {
             back.setOpaque(true);
             repaint();
         }
-
         @Override
         public void mouseExited(MouseEvent e) {
             back.setOpaque(false);

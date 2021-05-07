@@ -54,7 +54,7 @@ public class MainMenu extends JPanel {
         @Override
         public void mouseClicked(MouseEvent e) {
             setVisible(false);
-            frame.startPlacement();
+            frame.startGame();
         }
         @Override
         public void mouseEntered(MouseEvent e) {

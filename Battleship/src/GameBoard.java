@@ -9,9 +9,11 @@ public class GameBoard extends JPanel {
     public Orientation orientation = Orientation.VERTICAL;
     public Game game;
     public Cell[] cells;
+    public MainWindow frame;
     public int length;
 
-    public GameBoard(Game game) {
+    public GameBoard(Game game, MainWindow frame) {
+        this.frame = frame;
         setLayout(new BorderLayout());
         setOpaque(false);
 
@@ -43,18 +45,20 @@ public class GameBoard extends JPanel {
                         title.setText(game.getCurrent().toString());
                         // System.out.println("2" + game.getPhase());
                     // Action listener for BATTLING
-                    } else {
+                    } else if (game.getPhase() == Game.GamePhase.BATTLING){
                         game.fire(coordinateFocus);
                         title.setText(game.getCurrent().toString());
+                    } else {
+                        frame.endGame();
                     }
                     updateGUI();
                 });
                 cell.addMouseListener(new MouseAdapter() {
                     public void mouseEntered(MouseEvent e) {
-                        updateUI();
+                        updateGUI();
                     }
                     public void mouseExited(MouseEvent e) {
-                        updateUI();
+                        updateGUI();
                     }
                 });
                 gamePanel.add(cell);
@@ -68,8 +72,8 @@ public class GameBoard extends JPanel {
 
      */
     public void updateGUI() {
-        //Color invalidHighlight = Color.ORANGE;
-        //Color validHighlight = Color.GREEN;
+        Color invalidHighlight = Color.ORANGE;
+        Color validHighlight = Color.GREEN;
 
         Color ship = Color.GRAY;
         Color ocean = Color.BLUE;
