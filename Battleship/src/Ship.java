@@ -34,6 +34,12 @@ public class Ship {
         return false;
     }
 
+    public void sink() {    // test method
+        for (ShipCell c : this.cells) {
+            c.takeHit();
+        }
+    }
+
     public ShipCell getCellAt(Coordinate coords) {
         /**
          * return the ShipCell at coords if there is one

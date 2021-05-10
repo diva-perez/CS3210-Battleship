@@ -5,10 +5,11 @@ import java.util.Set;
 
 public class GameController {
     private Game game;
-    private Object phase = MainWindow.game.getPhase();
+    private Object phase;
 
     public GameController(Game game) {
         this.game = game;
+        phase = game.getPhase();
     }
 
     /*public void start() {

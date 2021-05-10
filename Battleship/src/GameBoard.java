@@ -14,11 +14,12 @@ public class GameBoard extends JPanel {
 
     public GameBoard(Game game, MainWindow frame) {
         this.frame = frame;
+        this.game = game;
         setLayout(new BorderLayout());
         setOpaque(false);
 
         // title
-        JLabel title = new JLabel(MainWindow.game.getCurrent().toString(), SwingConstants.CENTER);
+        JLabel title = new JLabel(game.getCurrent().toString(), SwingConstants.CENTER);
         title.setOpaque(false);
         title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
@@ -48,8 +49,9 @@ public class GameBoard extends JPanel {
                     } else if (game.getPhase() == Game.GamePhase.BATTLING){
                         game.fire(coordinateFocus);
                         title.setText(game.getCurrent().toString());
-                    } else {
-                        frame.endGame();
+                        if (game.getPhase() == Game.GamePhase.END) {
+                            frame.endGame();
+                        }
                     }
                     updateGUI();
                 });

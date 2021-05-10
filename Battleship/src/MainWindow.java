@@ -2,12 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
-    private MainMenu menu = new MainMenu(this);
-    private InstructionPanel instructions = new InstructionPanel(this);
-    private SettingPanel settings = new SettingPanel(this);
-    private EndPanel end = new EndPanel(game, this);
-    public static Game game = new Game();
-    public GameBoard board = new GameBoard(game, this);
+    private MainMenu menu;
+    private InstructionPanel instructions;
+    private SettingPanel settings;
+    private JPanel boardPanel;
+    private EndPanel end;
+    public Game game;
+    public GameBoard board;
 
     public MainWindow() {
         super("Battleship");
@@ -16,11 +17,13 @@ public class MainWindow extends JFrame {
         setLayout(new BorderLayout());
         pack();
 
+        menu = new MainMenu(this);
         add(menu);
         setVisible(true);
     }
 
     public void startSettings() {
+        settings = new SettingPanel(this);
         add(settings);
         settings.setVisible(true);
     }
@@ -30,24 +33,26 @@ public class MainWindow extends JFrame {
     }
 
     public void startInstructions() {
+        instructions = new InstructionPanel(this);
         add(instructions);
         setVisible(true);
     }
 
     public void startGame() {
+        game = new Game();
+        board = new GameBoard(game, this);
+        boardPanel = new JPanel();
         System.out.println("Current player:" + game.current.toString() + "\nInactive Player:" + game.inactive.toString());
-        JPanel boardPanel = new JPanel();
         boardPanel.add(board);
         boardPanel.setOpaque(false);
         add(boardPanel);
         setVisible(true);
-        if (game.getPhase() == Game.GamePhase.END) {
-            boardPanel.setVisible(false);
-        }
     }
+
     public void endGame() {
         System.out.println(game.winner);
-
+        boardPanel.setVisible(false);
+        end = new EndPanel(game, this, game.winner);
         add(end);
         setVisible(true);
     }

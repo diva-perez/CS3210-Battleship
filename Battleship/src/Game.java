@@ -48,8 +48,8 @@ public class Game {
 
 
     public void endTurn() {
-        System.out.println("Current player:" + this.current.toString() + "\nInactive Player:" + this.inactive.toString());
         // check if win condition is met
+        System.out.println(this.inactive.toString() + " checking this unsunk list");
         if (this.phase == GamePhase.BATTLING && (this.inactive.unsunkShips()).size() == 0) {
             this.phase = GamePhase.END;
             this.winner = this.current;
@@ -62,9 +62,12 @@ public class Game {
             }
         }
         // switch turns
+        System.out.println("Current player:" + this.current.toString() + "\nInactive Player:" + this.inactive.toString());
+        System.out.println("***************");
         Player temp = this.current;
         this.current = this.inactive;
         this.inactive = temp;
+        System.out.println("Current player:" + this.current.toString() + "\nInactive Player:" + this.inactive.toString());
     }
 
     public void placeShip(Coordinate coordinates, Orientation orientation) {
@@ -81,7 +84,8 @@ public class Game {
         assert !(this.current.guesses.contains(coordinates));
         this.current.guesses.add(coordinates);
         boolean didHit = this.inactive.checkShipsHit(coordinates);
-        System.out.println(this.current.toString() + " Player Guesses: " + this.current.guesses);
+        System.out.println(this.current.toString() + " Guesses: " + this.current.guesses);
+        System.out.println(this.inactive.toString() + " SunkShips: " + this.inactive.sunkShips());
         this.endTurn();
         return didHit;
     }

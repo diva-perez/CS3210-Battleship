@@ -9,28 +9,22 @@ public class EndPanel extends JPanel {
     private Player winner;
     private Game game;
 
-    public EndPanel(Game game, MainWindow frame) {
+    public EndPanel(Game game, MainWindow frame, Player winner) {
         this.frame = frame;
         this.game = game;
+        this.winner = game.winner;
         setOpaque(false);
         setLayout(new BorderLayout());
-        winner = game.winner;
 
-        // announcement
-        JPanel tPanel = new JPanel();
-        tPanel.setOpaque(false);
-        tPanel.setLayout(new BoxLayout(tPanel, BoxLayout.PAGE_AXIS));
-
+        // winner announcement
         JLabel title = new JLabel("CONGRATULATIONS", SwingConstants.CENTER);
-        title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
+        title.setFont(new Font("Serif", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
-        tPanel.add(title);
-
-        JLabel subtitle = new JLabel(winner + "wins!", SwingConstants.CENTER);
-        title.setFont(new Font("Lucida Bright", Font.PLAIN, 75));
-        tPanel.add(subtitle);
-
-        add(BorderLayout.CENTER, tPanel);
+        add(BorderLayout.NORTH, title);
+        JLabel subtitle = new JLabel(winner + " wins!", SwingConstants.CENTER);
+        subtitle.setFont(new Font("Serif", Font.PLAIN, 75));
+        subtitle.setBorder(BorderFactory.createEmptyBorder(10, 0, 400, 0));
+        add(BorderLayout.CENTER, subtitle);
 
         // menu button
         JPanel buttonPanel = new JPanel();
