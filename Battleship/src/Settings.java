@@ -10,7 +10,7 @@ public class Settings {
     public static int MAX_X = BOARD_WIDTH;
     public static int MAX_Y = BOARD_HEIGHT;
     public static ArrayList<Integer> SHIP_LENGTHS = new ArrayList<Integer>(
-            Arrays.asList(1, 1));
+            Arrays.asList(2, 1));
 
     public Settings() {
 

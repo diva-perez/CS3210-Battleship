@@ -39,8 +39,8 @@ public class Coordinate {
         /**
          * true if coordinates are on the board
          */
-        if (0 <= this.x && this.x <= Settings.MAX_X) {
-            if (0 <= this.y && this.y <= Settings.MAX_Y) {
+        if (0 <= this.x && this.x < Settings.MAX_X) {
+            if (0 <= this.y && this.y < Settings.MAX_Y) {
                 return true;
             }
         }

@@ -1,10 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
-public class GameBoard extends JPanel {
+public class GameBoard extends JPanel implements KeyListener {
     public Coordinate coordinateFocus;
     public Orientation orientation = Orientation.VERTICAL;
     public Game game;
@@ -17,6 +16,8 @@ public class GameBoard extends JPanel {
         this.game = game;
         setLayout(new BorderLayout());
         setOpaque(false);
+        addKeyListener(this);
+        setFocusable(true);
 
         // title
         JLabel title = new JLabel(game.getCurrent().toString(), SwingConstants.CENTER);
@@ -57,9 +58,11 @@ public class GameBoard extends JPanel {
                 });
                 cell.addMouseListener(new MouseAdapter() {
                     public void mouseEntered(MouseEvent e) {
+                        coordinateFocus = cell.getCoord();
                         updateGUI();
                     }
                     public void mouseExited(MouseEvent e) {
+                        coordinateFocus = cell.getCoord();
                         updateGUI();
                     }
                 });
@@ -69,14 +72,10 @@ public class GameBoard extends JPanel {
         add(gamePanel);
     }
 
-    /*
-    highlight method that will be active during
-
-     */
     public void updateGUI() {
         Color invalidHighlight = Color.ORANGE;
         Color validHighlight = Color.GREEN;
-
+        Color chosenColor = Color.BLUE;
         Color ship = Color.GRAY;
         Color ocean = Color.BLUE;
         Color hit = Color.RED;
@@ -84,7 +83,7 @@ public class GameBoard extends JPanel {
         Color fog = Color.BLUE;
 
         Game.GamePhase currentPhase = game.getPhase();
-        ArrayList<Coordinate> highlights;//this.getHighlightedCoords();
+        ArrayList<Coordinate> highlights = this.getHighlightedCoords();
         for (Cell cell : this.cells) {
             Coordinate currentCoord = cell.getCoord();
 
@@ -92,31 +91,32 @@ public class GameBoard extends JPanel {
             boolean hasMyShip = game.current.hasShipAtCoord(currentCoord);
             boolean hasEnemyShip = game.inactive.hasShipAtCoord(currentCoord);
             boolean placing = game.getPhase() == Game.GamePhase.PLACING;
-            boolean isHighlighted = coordinateFocus == currentCoord; //highlights.contains(currentCoord);
+            boolean isHighlighted = highlights.contains(cell.getCoord());
             boolean battling = game.getPhase() == Game.GamePhase.BATTLING;
             boolean isVisible = game.current.guesses.contains(currentCoord);
             boolean validBattlingHighlight = !isVisible;
-            //boolean shipFitsOnBoard = highlights.size() == game.current.nextUnplacedShipLength();
+            // need "placing &&" to prevent index out of bound error
+            // will run nextUnplacedShipLength() only during placing phase
+            boolean shipFitsOnBoard = placing && highlights.size() == game.current.nextUnplacedShipLength();
             boolean allHighlightedEmpty = true;
-            /*for (Coordinate coordinates : highlights) {
+            for (Coordinate coordinates : highlights) {
                 // if there is a ship at that coordinate, valid = false
                 allHighlightedEmpty = allHighlightedEmpty && !(game.current.allShipCoordinates().contains(coordinates));
             }
-            boolean validPlacingHighlight = shipFitsOnBoard && allHighlightedEmpty;*/
+            boolean validPlacingHighlight = shipFitsOnBoard && allHighlightedEmpty;
 
-            // check conditions
-            Color chosenColor = Color.BLUE;
-            /*if (placing && isHighlighted && validPlacingHighlight) {
+            // check conditions for each cell
+            if (placing && !isHighlighted && !hasMyShip) {
+                chosenColor = ocean;
+            }
+            if (placing && isHighlighted && validPlacingHighlight) {
                 chosenColor = validHighlight;
             }
             if (placing && isHighlighted && !validPlacingHighlight) {
                 chosenColor = invalidHighlight;
-            }*/
-            if (placing && isHighlighted && hasMyShip) {
-                chosenColor = ship;
             }
-            if (placing && isHighlighted && !hasMyShip) {
-                chosenColor = ocean;
+            if (placing && hasMyShip) {
+                chosenColor = ship;
             }
             if (battling && isVisible && hasEnemyShip) {
                 chosenColor = hit;
@@ -128,66 +128,52 @@ public class GameBoard extends JPanel {
                 chosenColor = fog;
             }
             cell.setBackground(chosenColor);
+
+            if (currentCoord.equals(new Coordinate(9, 9))) {
+                break;
+            }
+
         }
     }
 
-    /*private ArrayList<Coordinate> getHighlightedCoords() {
+    private ArrayList<Coordinate> getHighlightedCoords() {
         ArrayList<Coordinate> highlights = new ArrayList<>();
+        // highlights.add(coordinateFocus);
         if (game.getPhase() == Game.GamePhase.PLACING) {
-            int highlightLength = game.current.nextUnplacedShipLength();
-            while (highlightLength > 0) {
-                Coordinate next = coordinateFocus.getEndFrom(highlightLength, orientation);
-                highlights.add(next);
-                highlightLength--;
+            for (int i = 1; i <= game.current.nextUnplacedShipLength(); i++) {
+                Coordinate next = coordinateFocus.getEndFrom(i, orientation);
                 if (!next.onBoard()) {
                     break;
                 }
+                highlights.add(next);
             }
+        } else {    // battling -- need for bomb
+
         }
-        else {
-        }
+        System.out.println(highlights);
         return highlights;
-    }*/
-}
+    }
 
-    /*public GameBoard(Game game) {
-        setLayout(new BorderLayout());
-        setOpaque(false);
-        // title
-        JLabel title = new JLabel(MainWindow.game.getCurrent().toString(), SwingConstants.CENTER);
-        title.setOpaque(false);
-        title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
-        title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
-        add(title, BorderLayout.NORTH);
+    @Override
+    public void keyTyped(KeyEvent e) {
+        System.out.println("keyTyped");
+    }
 
-        JPanel gamePanel = new JPanel();
-        this.game = game;
-        gamePanel.setLayout(new GridLayout(10, 10));
-        gamePanel.setOpaque(false);
+    public void keyPressed(KeyEvent e) {
+        System.out.println(e.getKeyCode());
+    }
 
-        for (int y = 1; y <= Settings.MAX_Y; y++) {     // + 1 to get all the tiles to paint
-            for (int x = 0; x < Settings.MAX_X; x++) {
-                this.cell = (new Cell(new Coordinate(x, y)));
-                this.cell.addActionListener(e -> {
-                    coordinate = cell.getCoord();
-                    System.out.println(coordinate);
-                    game.placeShip(coordinate, orientation);
-                    title.setText(game.getCurrent().toString());
-                    updateGUI();
-                });
-                this.cell.addMouseListener(new MouseAdapter() {
-                    public void mouseEntered(MouseEvent e) {
-                        coordinate = cell.getCoord();
-                        System.out.println(coordinate);
-                        updateGUI();
-                    }
-
-                    public void mouseExited(MouseEvent e) {
-                        updateGUI();
-                    }
-                });
-                gamePanel.add(cell);
+    @Override
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+        int rotateKey = KeyEvent.VK_R;
+        if (key == rotateKey) {
+            if (orientation == Orientation.VERTICAL) {
+                orientation = Orientation.HORIZONTAL;
+            } else {
+                orientation = Orientation.VERTICAL;
             }
-            add(BorderLayout.CENTER, gamePanel);
         }
-    }*/
+        System.out.println(orientation);
+    }
+}

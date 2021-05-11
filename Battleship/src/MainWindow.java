@@ -46,6 +46,7 @@ public class MainWindow extends JFrame {
         boardPanel.add(board);
         boardPanel.setOpaque(false);
         add(boardPanel);
+        boardPanel.setFocusable(true);
         setVisible(true);
     }
 

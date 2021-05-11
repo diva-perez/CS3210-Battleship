@@ -26,12 +26,13 @@ public class Ship {
         /**
          * if all ShipCells have been hit
          */
+        boolean isSunk = true;
         for (ShipCell c : this.cells) {
-            if (c.isHit()) {
-                return true;
+            if (!c.isHit()) {
+                isSunk = false;
             }
         }
-        return false;
+        return isSunk;
     }
 
     public void sink() {    // test method
