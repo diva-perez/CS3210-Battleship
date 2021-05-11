@@ -5,12 +5,13 @@ import java.util.Optional;
 
 public class Game {
     public ArrayList<Player> players;
-    public Player current = new Player("Player One");
+    public Player current;
     public Player inactive;
     public GamePhase phase;
     public Player winner;
 
-    public Game() {
+    public Game(Settings settings) {
+        this.current = new Player("Player One");
         this.inactive = new Player("Player Two");
         this.players = new ArrayList<>();
         players.add(this.current);

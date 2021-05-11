@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 class GameTest {
-    public static Game gameFactory(boolean isSunk, Game.GamePhase phase) {
+    /*public static Game gameFactory(boolean isSunk, Game.GamePhase phase) {
         Game game = new Game();
         game.phase = phase;
         Coordinate sunk = new Coordinate(1, 1);
@@ -52,5 +52,5 @@ class GameTest {
     @Test
     void fire() {
 
-    }
+    }*/
 }

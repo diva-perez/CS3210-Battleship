@@ -1,15 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.InputMismatchException;
 
 public class SettingPanel extends JPanel {
     public MainWindow frame;
     public JButton confirm;
-    public JToggleButton toggle;
+    public JToggleButton bombToggle;
+    public JToggleButton vsToggle;
+    public Settings settings;
 
-    public SettingPanel(MainWindow frame) {
+    public SettingPanel(MainWindow frame, Settings settings) {
         this.frame = frame;
+        this.settings = settings;
         setOpaque(false);
         setLayout(new BorderLayout());
 
@@ -51,21 +57,55 @@ public class SettingPanel extends JPanel {
         JLabel bombLabel = new JLabel("Use bigger bombs: ");
         bombLabel.setFont(new Font("Arial", Font.BOLD, 20));
         option3.add(bombLabel);
-        toggle = new JToggleButton("OFF");
-        toggle.addItemListener(e -> {
-            if (toggle.isSelected())
-                toggle.setText("ON");
+        bombToggle = new JToggleButton("OFF");
+        bombToggle.addItemListener(e -> {
+            if (bombToggle.isSelected())
+                bombToggle.setText("ON");
             else
-                toggle.setText("OFF");
+                bombToggle.setText("OFF");
         });
-        option3.add(toggle);
+        option3.add(bombToggle);
         center.add(option3);
+
+        // Vs Computer
+        JPanel option4 = new JPanel();
+        option4.setOpaque(false);
+        JLabel vsLabel = new JLabel("Play against the computer: ");
+        vsLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        option4.add(vsLabel);
+        vsToggle = new JToggleButton("OFF");
+        vsToggle.addItemListener(e -> {
+            if (vsToggle.isSelected())
+                vsToggle.setText("ON");
+            else
+                vsToggle.setText("OFF");
+        });
+        option4.add(vsToggle);
+        center.add(option4);
 
         // Confirm Button
         confirm = new JButton("Back");
         confirm.setFont(new Font("Arial", Font.PLAIN, 40));
-        confirm.addMouseListener(new SettingPanel.ConfirmMouseListener());
-        confirm.addMouseListener(new ConfirmMouseListener());
+        // store input from user when confirm button is pressed
+        confirm.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                final String inputNumShips = numField.getText();
+                final String inputLength = lengthField.getText();
+                final boolean bombSize = bombToggle.isSelected();
+                final boolean vsComputer = vsToggle.isSelected();
+                try {
+                    int intNumShips = Integer.parseInt(inputNumShips);
+                    int intLength = Integer.parseInt(inputLength);
+                    System.out.println(intNumShips + ", " + intLength + ", Bigger bomb size: " + bombSize + ", Play against computer: " + vsComputer);
+                } catch (InputMismatchException exception) {
+                    System.out.println("could not find an integer in the string");
+                }
+                frame.mainMenu();
+                setVisible(false);
+            }
+        });
+        //confirm.addMouseListener(new SettingPanel.ConfirmMouseListener());
+        //confirm.addMouseListener(new ConfirmMouseListener());
         JPanel south = new JPanel();
         south.setBorder(BorderFactory.createEmptyBorder(0, 0, 25, 0));
         south.setOpaque(false);
@@ -74,8 +114,9 @@ public class SettingPanel extends JPanel {
         add(BorderLayout.SOUTH, south);
         add(BorderLayout.CENTER, center);
     }
+}
 
-    private class ConfirmMouseListener extends MouseAdapter {
+/*    private class ConfirmMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
             frame.mainMenu();
@@ -95,4 +136,4 @@ public class SettingPanel extends JPanel {
             repaint();
         }
     }
-}
+}*/

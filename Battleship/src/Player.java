@@ -5,6 +5,7 @@ public class Player {
     public ArrayList<Integer> unplacedShipLengths;
     public ArrayList<Ship> ships;
     public String name;
+    public Settings settings;
     public ArrayList<Coordinate> guesses;
     public ArrayList<Coordinate> hitList;
     public ArrayList<Coordinate> missList;
@@ -15,7 +16,8 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
-        this.unplacedShipLengths = new ArrayList<>(Settings.SHIP_LENGTHS);
+        this.settings = settings;
+        this.unplacedShipLengths = new ArrayList<>(settings.SHIP_LENGTHS);
         this.ships = new ArrayList<>();
         this.guesses = new ArrayList<>();   // where you tried to fire at enemy ships
         this.hitList = new ArrayList<>();   // red pegs on your own ship
