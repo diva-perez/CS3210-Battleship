@@ -10,7 +10,7 @@ public class Game {
     public GamePhase phase;
     public Player winner;
 
-    public Game(Settings settings) {
+    public Game() {
         this.current = new Player("Player One");
         this.inactive = new Player("Player Two");
         this.players = new ArrayList<>();

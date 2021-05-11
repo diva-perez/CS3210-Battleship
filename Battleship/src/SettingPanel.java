@@ -84,7 +84,7 @@ public class SettingPanel extends JPanel {
         center.add(option4);
 
         // Confirm Button
-        confirm = new JButton("Back");
+        confirm = new JButton("Confirm");
         confirm.setFont(new Font("Arial", Font.PLAIN, 40));
         // store input from user when confirm button is pressed
         confirm.addActionListener(new ActionListener() {

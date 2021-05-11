@@ -5,7 +5,7 @@ public class MainWindow extends JFrame {
     private MainMenu menu;
     private InstructionPanel instructions;
     private SettingPanel settingsPanel;
-    private Settings settings;
+    private Settings settings = new Settings();
     private JPanel boardPanel;
     private EndPanel end;
     public Game game;
@@ -40,7 +40,7 @@ public class MainWindow extends JFrame {
     }
 
     public void startGame() {
-        game = new Game(settings);
+        game = new Game();
         board = new GameBoard(game, this);
         boardPanel = new JPanel();
         System.out.println("Current player:" + game.current.toString() + "\nInactive Player:" + game.inactive.toString());

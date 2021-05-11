@@ -9,13 +9,16 @@ public class Settings {
     public static int MAX_Y = BOARD_HEIGHT;
 
     // variable settings
-    public ArrayList<Integer> SHIP_LENGTHS = new ArrayList<Integer>(
+    // this needs to not be static
+    public static ArrayList<Integer> SHIP_LENGTHS = new ArrayList<Integer>(
             Arrays.asList(2, 1));
     private int inputNumShips;
     private int inputLength;
     private boolean bigBomb = false;
     private boolean vsComputer = false;
 
+
+    public Settings() {}
 
     public Settings(int inputNumShips, int inputLength, boolean bombSize, boolean vsComputer) {
         SHIP_LENGTHS = amountOfShips(this.inputNumShips);
