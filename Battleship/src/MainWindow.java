@@ -2,10 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
+    public static Settings settings;
     private MainMenu menu;
     private InstructionPanel instructions;
     private SettingPanel settingsPanel;
-    private Settings settings = new Settings();
     private JPanel boardPanel;
     private EndPanel end;
     public Game game;
@@ -24,7 +24,7 @@ public class MainWindow extends JFrame {
     }
 
     public void startSettings() {
-        this.settingsPanel = new SettingPanel(this, settings);
+        this.settingsPanel = new SettingPanel(this);
         add(settingsPanel);
         settingsPanel.setVisible(true);
     }

@@ -21,7 +21,36 @@ public class InstructionPanel extends JPanel {
         // instructions
         JPanel info = new JPanel();
         info.setBackground(new Color(255, 255, 255, 100));
-        JLabel instructions = new JLabel("<html><div style='text-align: center;'>You and your opponent will alternate turns placing bombs to try and hit each other's ship<br>The first one to find the other's ship wins</div></html>");
+        JLabel instructions = new JLabel("<html><div style='text-align: justify;'>" +
+                "HOW TO WIN:" +
+                "<br>" +
+                "You and your opponent will alternate turns placing bombs to try and hit each other's ships" +
+                "<br>" +
+                "The first one to sink all of the other's ships wins." +
+                "<br><br>" +
+                "PLACING:" +
+                "<br>" +
+                "When placing a ship, a green highlight will show you the cells your ship will be located in." +
+                "<br>" +
+                "If your highlight is orange, that is not a valid location to place your ship" +
+                "Click on a cell to place your ship" +
+                "<br>" +
+                "Gray cells show your ships placement on the board" +
+                "<br>" +
+                "Your ships cannot hang off the board, and they cannot be stacked on one another" +
+                "<br><br>" +
+                "BATTLING:" +
+                "<br>" +
+                "When you enter the battling phase, players will alternate turns guessing where their opponents ships are." +
+                "<br>" +
+                "If your guess is a miss, the cell you guessed will turn white." +
+                "<br>" +
+                "If your guess is a hit, the cell will turn red." +
+                "<br>" +
+                "To sink a ship, you must hit all the cells a ship is in" +
+                "<br>" +
+                "The game ends when all of your opponents ships have sunk." +
+                "</div></html>");
         instructions.setFont(new Font("Arial", Font.PLAIN, 25));
         info.add(instructions);
         add(BorderLayout.CENTER, info);

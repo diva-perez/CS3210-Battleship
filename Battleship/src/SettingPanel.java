@@ -11,11 +11,9 @@ public class SettingPanel extends JPanel {
     public JButton confirm;
     public JToggleButton bombToggle;
     public JToggleButton vsToggle;
-    public Settings settings;
 
-    public SettingPanel(MainWindow frame, Settings settings) {
+    public SettingPanel(MainWindow frame) {
         this.frame = frame;
-        this.settings = settings;
         setOpaque(false);
         setLayout(new BorderLayout());
 
@@ -97,8 +95,11 @@ public class SettingPanel extends JPanel {
                     int intNumShips = Integer.parseInt(inputNumShips);
                     int intLength = Integer.parseInt(inputLength);
                     System.out.println(intNumShips + ", " + intLength + ", Bigger bomb size: " + bombSize + ", Play against computer: " + vsComputer);
+                    MainWindow.settings = new Settings(intNumShips, intLength);
+                    System.out.println(MainWindow.settings.getShipList());
                 } catch (InputMismatchException exception) {
                     System.out.println("could not find an integer in the string");
+
                 }
                 frame.mainMenu();
                 setVisible(false);

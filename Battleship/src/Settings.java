@@ -9,26 +9,33 @@ public class Settings {
     public static int MAX_Y = BOARD_HEIGHT;
 
     // variable settings
-    // this needs to not be static
-    public static ArrayList<Integer> SHIP_LENGTHS = new ArrayList<Integer>(
+    // this needs to not be static or wait to initialize until we hit start game / confirm in settings
+    public ArrayList<Integer> SHIP_LENGTHS = new ArrayList<Integer>(
             Arrays.asList(2, 1));
-    private int inputNumShips;
-    private int inputLength;
-    private boolean bigBomb = false;
-    private boolean vsComputer = false;
+    //private int numShips;
+    //private int length;
+    //private boolean bigBomb = false;
+    //private boolean vsComputer = false;
 
 
     public Settings() {}
 
+    public Settings(int inputNumShips, int inputLength) {
+        amountOfShips(inputNumShips);
+        shipLengths(inputLength);
+    }
+
     public Settings(int inputNumShips, int inputLength, boolean bombSize, boolean vsComputer) {
-        SHIP_LENGTHS = amountOfShips(this.inputNumShips);
-        shipLengths(this.inputLength);
+        amountOfShips(inputNumShips);
+        shipLengths(inputLength);
     }
 
     // change SHIP_LENGTHS ArrayList amount of ships
-    public ArrayList<Integer> amountOfShips(int numShip) {
-        ArrayList<Integer> list = new ArrayList<Integer>(numShip);
-        return list;
+    public void amountOfShips(int numShips) {
+        SHIP_LENGTHS = new ArrayList<Integer>();
+        for (int i = 0; i < numShips; i++) {
+            SHIP_LENGTHS.add(i);
+        }
     }
 
     // change SHIP_LENGTHS length
@@ -38,8 +45,8 @@ public class Settings {
         }
     }
 
-    // set bomb size
-    public void bombSize(int size) {
+    // use big bomb size
+    public void bombSize(boolean bigBomb) {
 
     }
 
