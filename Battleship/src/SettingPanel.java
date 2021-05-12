@@ -94,6 +94,7 @@ public class SettingPanel extends JPanel {
                     System.out.println(MainWindow.settings.getShipList());
                 } catch (NumberFormatException exception) {
                     System.out.println("No integer found in string");
+                    MainWindow.settings = new Settings (bombSize, vsComputer);
                 }
                 frame.mainMenu();
                 setVisible(false);

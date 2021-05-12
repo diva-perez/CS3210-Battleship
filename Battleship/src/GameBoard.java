@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 public class GameBoard extends JPanel implements KeyListener {
     public Coordinate coordinateFocus;
+    public Coordinate RUQ;
+    public Coordinate LLQ;
+    public Coordinate RLQ;
     public Orientation orientation = Orientation.VERTICAL;
     public Game game;
     public Cell[] cells;
@@ -51,13 +54,13 @@ public class GameBoard extends JPanel implements KeyListener {
                         if (MainWindow.settings.getBombSize()) {
                             System.out.println("Using a bigger bomb");
                             // additional bomb cells
-                            Coordinate RUQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y);
+                            /*Coordinate RUQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y);
                             Coordinate LLQ = new Coordinate(coordinateFocus.x, coordinateFocus.y + 1);
                             Coordinate RLQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y + 1);
                             System.out.println("Additional bomb cells at: ");
                             System.out.println(RUQ.toString());
                             System.out.println(LLQ.toString());
-                            System.out.println(RLQ.toString());
+                            System.out.println(RLQ.toString());*/
                             game.fire(RUQ);
                             game.fire(LLQ);
                             game.fire(RLQ);
@@ -141,18 +144,16 @@ public class GameBoard extends JPanel implements KeyListener {
             if (battling && validBattlingHighlight) {
                 chosenColor = fog;
             }
-            cell.setBackground(chosenColor);
-
-            if (currentCoord.equals(new Coordinate(9, 9))) {
-                break;
+            if (battling && isHighlighted && validBattlingHighlight) {
+                chosenColor = validHighlight;
             }
+            cell.setBackground(chosenColor);
 
         }
     }
 
     private ArrayList<Coordinate> getHighlightedCoords() {
         ArrayList<Coordinate> highlights = new ArrayList<>();
-        // highlights.add(coordinateFocus);
         if (game.getPhase() == Game.GamePhase.PLACING) {
             for (int i = 1; i <= game.current.nextUnplacedShipLength(); i++) {
                 Coordinate next = coordinateFocus.getEndFrom(i, orientation);
@@ -161,9 +162,18 @@ public class GameBoard extends JPanel implements KeyListener {
                 }
                 highlights.add(next);
             }
-        } else {    // battling -- need for bomb
-
+        } else if (game.getPhase() == Game.GamePhase.BATTLING) {    // highlight entire bomb size
+            highlights.add(coordinateFocus);
+            if (MainWindow.settings.getBombSize()) {
+                this.RUQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y);
+                this.LLQ = new Coordinate(coordinateFocus.x, coordinateFocus.y + 1);
+                this.RLQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y + 1);
+                highlights.add(RUQ);
+                highlights.add(LLQ);
+                highlights.add(RLQ);
+            }
         }
+        System.out.println("This is the highlights list: " + highlights.toString());
         return highlights;
     }
 

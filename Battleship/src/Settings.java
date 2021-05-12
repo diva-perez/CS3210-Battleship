@@ -9,16 +9,18 @@ public class Settings {
     public static int MAX_Y = BOARD_HEIGHT;
 
     // variable settings
-    // this needs to not be static or wait to initialize until we hit start game / confirm in settings
     public ArrayList<Integer> SHIP_LENGTHS = new ArrayList<Integer>(
-            Arrays.asList(1));
-    //private int numShips;
-    //private int length;
+            Arrays.asList(2, 3, 3, 4, 5));
     private boolean bigBomb;
     private boolean vsComputer;
 
 
     public Settings() {}
+
+    public Settings(boolean bombSize, boolean vsComputer) {
+        setBombSize(bombSize);
+        this.vsComputer = vsComputer;
+    }
 
     public Settings(int inputNumShips, int inputLength, boolean bombSize, boolean vsComputer) {
         amountOfShips(inputNumShips);
