@@ -29,7 +29,7 @@ public class SettingPanel extends JPanel {
 
         // Custom Ship Number
         JPanel option1 = new JPanel();
-        JLabel numLabel = new JLabel("Enter the number of ships: ");
+        JLabel numLabel = new JLabel("Enter the number of ships (cannot exceed 5): ");
         numLabel.setFont(new Font("Arial", Font.BOLD, 20));
         option1.add(numLabel);
         JTextField numField = new JTextField(5);
@@ -38,7 +38,7 @@ public class SettingPanel extends JPanel {
 
         // Custom Ship Length
         JPanel option2 = new JPanel();
-        JLabel lengthLabel = new JLabel("Enter the length of the ships: ");
+        JLabel lengthLabel = new JLabel("Enter the length of the ships (cannot exceed 10): ");
         lengthLabel.setFont(new Font("Arial", Font.BOLD, 20));
         option2.add(lengthLabel);
         JTextField lengthField = new JTextField(5);
@@ -80,25 +80,28 @@ public class SettingPanel extends JPanel {
         confirm = new JButton("Confirm");
         confirm.setFont(new Font("Arial", Font.PLAIN, 40));
         // store input from user when confirm button is pressed
-        confirm.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                final String inputNumShips = numField.getText();
-                final String inputLength = lengthField.getText();
-                final boolean bombSize = bombToggle.isSelected();
-                final boolean vsComputer = vsToggle.isSelected();
-                try {
-                    int intNumShips = Integer.parseInt(inputNumShips);  // cannot be larger than 5
-                    int intLength = Integer.parseInt(inputLength);      // cannot be larger than 10
-                    System.out.println(intNumShips + ", " + intLength + ", Bigger bomb size: " + bombSize + ", Play against computer: " + vsComputer);
+        confirm.addActionListener(e -> {
+            final String inputNumShips = numField.getText();
+            final String inputLength = lengthField.getText();
+            final boolean bombSize = bombToggle.isSelected();
+            final boolean vsComputer = vsToggle.isSelected();
+            try {
+                int intNumShips = Integer.parseInt(inputNumShips);  // cannot be larger than 5
+                int intLength = Integer.parseInt(inputLength);      // cannot be larger than 10
+                if (intNumShips <= 5 && intLength <= 10) {
                     MainWindow.settings = new Settings(intNumShips, intLength, bombSize, vsComputer);
-                    System.out.println(MainWindow.settings.getShipList());
-                } catch (NumberFormatException exception) {
-                    System.out.println("No integer found in string");
+                } else {
+                    System.out.println("Number of Ships cannot exceed 5");
+                    System.out.println("Length of Ships cannot exceed 10");
+                    System.out.println("Default number of ships and ship lengths will be used instead");
                     MainWindow.settings = new Settings (bombSize, vsComputer);
                 }
-                frame.mainMenu();
-                setVisible(false);
+            } catch (NumberFormatException exception) {
+                System.out.println("No integer found in string");
+                MainWindow.settings = new Settings (bombSize, vsComputer);
             }
+            frame.mainMenu();
+            setVisible(false);
         });
         JPanel south = new JPanel();
         south.setBorder(BorderFactory.createEmptyBorder(0, 0, 25, 0));
@@ -108,25 +111,3 @@ public class SettingPanel extends JPanel {
         add(BorderLayout.CENTER, center);
     }
 }
-
-/*    private class ConfirmMouseListener extends MouseAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            frame.mainMenu();
-            //Settings.settings();
-            setVisible(false);
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            confirm.setOpaque(true);
-            repaint();
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            confirm.setOpaque(false);
-            repaint();
-        }
-    }
-}*/
