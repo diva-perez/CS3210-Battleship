@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class GameBoard extends JPanel implements KeyListener {
     public Coordinate coordinateFocus;
@@ -47,6 +46,7 @@ public class GameBoard extends JPanel implements KeyListener {
                         game.placeShip(coordinateFocus, orientation);
                         if (game.getCurrent().toString().equals("Computer")) {
                             game.endTurn();
+                            game.phase = Game.GamePhase.BATTLING;
                         }
                         title.setText(game.getCurrent().toString());
 
@@ -55,7 +55,6 @@ public class GameBoard extends JPanel implements KeyListener {
                         game.fire(coordinateFocus);
                         // fire consecutively for bigger bomb
                         if (MainWindow.settings.getBombSize()) {
-                            System.out.println("Using a bigger bomb");
                             // additional bomb cells
                             game.fire(RUQ);
                             game.fire(LLQ);

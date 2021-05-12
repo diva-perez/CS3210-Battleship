@@ -89,7 +89,6 @@ public class SettingsPanel extends JPanel {
                     MainWindow.settings = new Settings (bombSize, vsComputer);
                 }
             } catch (NumberFormatException exception) {
-                System.out.println("No integer found in string");
                 MainWindow.settings = new Settings (bombSize, vsComputer);
             }
             frame.mainMenu();

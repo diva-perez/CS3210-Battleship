@@ -10,12 +10,20 @@ public class Settings {
 
     // variable settings
     public ArrayList<Integer> SHIP_LENGTHS = new ArrayList<>(
-            Arrays.asList(1));
+            Arrays.asList(2, 3, 3, 4, 5));
     private boolean bigBomb;
     private boolean vsComputer;
 
 
-    public Settings() {}
+    public Settings() {
+        /*
+         * initialize game with default settings
+         * 5 ships
+         * lengths 2, 3, 3, 4, 5
+         * small bomb
+         * 2 players
+         */
+    }
 
     public Settings(boolean bombSize, boolean vsComputer) {
         /*
