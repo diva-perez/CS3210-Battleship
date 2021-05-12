@@ -4,10 +4,7 @@ import java.awt.*;
 public class MainWindow extends JFrame {
     public static Settings settings = new Settings();
     private MainMenu menu;
-    private InstructionPanel instructions;
-    private SettingPanel settingsPanel;
     private JPanel boardPanel;
-    private EndPanel end;
     public Game game;
     public GameBoard board;
 
@@ -24,7 +21,7 @@ public class MainWindow extends JFrame {
     }
 
     public void startSettings() {
-        this.settingsPanel = new SettingPanel(this);
+        SettingsPanel settingsPanel = new SettingsPanel(this);
         add(settingsPanel);
         settingsPanel.setVisible(true);
     }
@@ -34,7 +31,7 @@ public class MainWindow extends JFrame {
     }
 
     public void startInstructions() {
-        instructions = new InstructionPanel(this);
+        InstructionPanel instructions = new InstructionPanel(this);
         add(instructions);
         setVisible(true);
     }
@@ -43,7 +40,6 @@ public class MainWindow extends JFrame {
         game = new Game();
         board = new GameBoard(game, this);
         boardPanel = new JPanel();
-        System.out.println("Current player:" + game.current.toString() + "\nInactive Player:" + game.inactive.toString());
         boardPanel.add(board);
         boardPanel.setOpaque(false);
         add(boardPanel);
@@ -54,7 +50,7 @@ public class MainWindow extends JFrame {
     public void endGame() {
         System.out.println(game.winner);
         boardPanel.setVisible(false);
-        end = new EndPanel(game, this, game.winner);
+        EndPanel end = new EndPanel(game, this, game.winner);
         add(end);
         setVisible(true);
     }

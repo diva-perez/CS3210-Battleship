@@ -12,7 +12,6 @@ public class GameBoard extends JPanel implements KeyListener {
     public Game game;
     public Cell[] cells;
     public MainWindow frame;
-    public int length;
 
     public GameBoard(Game game, MainWindow frame) {
         this.frame = frame;
@@ -25,7 +24,7 @@ public class GameBoard extends JPanel implements KeyListener {
         // title
         JLabel title = new JLabel(game.getCurrent().toString(), SwingConstants.CENTER);
         title.setOpaque(false);
-        title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
+        title.setFont(new Font("Serif", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
         add(title, BorderLayout.NORTH);
 
@@ -84,6 +83,9 @@ public class GameBoard extends JPanel implements KeyListener {
     }
 
     public void updateGUI() {
+        /*
+         * updates the cell colors of the entire board
+         */
         Color invalidHighlight = Color.ORANGE;
         Color validHighlight = Color.GREEN;
         Color chosenColor = Color.BLUE;
@@ -93,7 +95,7 @@ public class GameBoard extends JPanel implements KeyListener {
         Color miss = Color.WHITE;
         Color fog = Color.BLUE;
 
-        Game.GamePhase currentPhase = game.getPhase();
+        //Game.GamePhase currentPhase = game.getPhase();
         ArrayList<Coordinate> highlights = this.getHighlightedCoords();
         for (Cell cell : this.cells) {
             Coordinate currentCoord = cell.getCoord();
@@ -147,6 +149,10 @@ public class GameBoard extends JPanel implements KeyListener {
     }
 
     private ArrayList<Coordinate> getHighlightedCoords() {
+        /*
+         * adds coordinates to be highlighted to a "highlights" list
+         * for bombs and ship placement
+         */
         ArrayList<Coordinate> highlights = new ArrayList<>();
         if (game.getPhase() == Game.GamePhase.PLACING) {
             for (int i = 1; i <= game.current.nextUnplacedShipLength(); i++) {
@@ -170,16 +176,11 @@ public class GameBoard extends JPanel implements KeyListener {
         }
         return highlights;
     }
-
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println("keyTyped");
     }
-
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
     }
-
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();

@@ -1,24 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.InputMismatchException;
 
-public class SettingPanel extends JPanel {
-    public MainWindow frame;
-    public JButton confirm;
-    public JToggleButton bombToggle;
-    public JToggleButton vsToggle;
+public class SettingsPanel extends JPanel {
+    private final JToggleButton bombToggle;
+    private final JToggleButton vsToggle;
 
-    public SettingPanel(MainWindow frame) {
-        this.frame = frame;
+    public SettingsPanel(MainWindow frame) {
         setLayout(new BorderLayout());
 
         // title
         JLabel title = new JLabel("SETTINGS", SwingConstants.CENTER);
-        title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
+        title.setFont(new Font("Serif", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
         add(title, BorderLayout.NORTH);
 
@@ -77,7 +69,7 @@ public class SettingPanel extends JPanel {
         center.add(option4);
 
         // Confirm Button
-        confirm = new JButton("Confirm");
+        JButton confirm = new JButton("Confirm");
         confirm.setFont(new Font("Arial", Font.PLAIN, 40));
         // store input from user when confirm button is pressed
         confirm.addActionListener(e -> {

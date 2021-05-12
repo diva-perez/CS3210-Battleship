@@ -16,11 +16,14 @@ public class MainMenu extends JPanel {
 
         // title
         JLabel title = new JLabel("BATTLESHIP", SwingConstants.CENTER);
-        title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
+        title.setFont(new Font("Serif", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
         add(BorderLayout.NORTH, title);
 
         // start default battleship
+        // ships of size 2, 3, 3, 4, 5
+        // bomb size = 1
+        // 2 players
         start = new JButton("Start Game");
         start.setFont(new Font("Arial", Font.PLAIN, 40));
         start.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -50,6 +53,9 @@ public class MainMenu extends JPanel {
         add(BorderLayout.CENTER, menuPanel);
     }
 
+    /*
+     * mouse listeners for start, settings, and instruction buttons
+     */
     private class StartMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -84,7 +90,6 @@ public class MainMenu extends JPanel {
             repaint();
         }
     }
-
     private class InstructionMouseListener extends StartMouseListener {
         @Override
         public void mouseClicked(MouseEvent e) {

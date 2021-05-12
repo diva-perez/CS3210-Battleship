@@ -4,8 +4,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class InstructionPanel extends JPanel {
-    private MainWindow frame;
-    private JButton back;
+    private final MainWindow frame;
+    private final JButton back;
 
     public InstructionPanel(MainWindow frame) {
         this.frame = frame;
@@ -13,7 +13,7 @@ public class InstructionPanel extends JPanel {
 
         // title
         JLabel title = new JLabel("INSTRUCTIONS", SwingConstants.CENTER);
-        title.setFont(new Font("Lucida Bright", Font.BOLD, 100));
+        title.setFont(new Font("Serif", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
         add(BorderLayout.NORTH, title);
 

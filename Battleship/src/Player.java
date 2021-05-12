@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Player {
     public ArrayList<Integer> unplacedShipLengths;
@@ -8,10 +7,9 @@ public class Player {
     public ArrayList<Coordinate> guesses;
     public ArrayList<Coordinate> hitList;
     public ArrayList<Coordinate> missList;
+    // 0 to start from the head
+    // helps with removing elements from the same end that we read from
     public int NEXT_UNPLACED_INDEX = 0;
-    /* 0 to start from the head
-     * helps with removing elements from the same end that we read from
-     */
 
     public Player(String name) {
         this.name = name;
@@ -26,15 +24,10 @@ public class Player {
         return this.name;
     }
 
-    public Coordinate hasGuessed(Coordinate coordinates) {
-        Iterator<Coordinate> guessesIterator = guesses.iterator();
-        while (guessesIterator.hasNext()) {
-            return coordinates;
-        }
-        return null;
-    }
-
     public int nextUnplacedShipLength() {
+        /*
+         * gets the length of the next ship to place for current highlight length
+         */
         assert this.hasUnplacedShips() : "No ships left to place";
         return this.unplacedShipLengths.get(this.NEXT_UNPLACED_INDEX);
     }
@@ -47,17 +40,10 @@ public class Player {
         return !(this.allShipsPlaced());
     }
 
-    public ArrayList<Ship> sunkShips() {
-        ArrayList<Ship> sunkShips = new ArrayList<>();
-        for (Ship s : this.ships) {
-            if (s.sunk()) {
-                sunkShips.add(s);
-            }
-        }
-        return sunkShips;
-    }
-
     public ArrayList<Ship> unsunkShips() {
+        /*
+         * array list used to track player ships status for checking win condition
+         */
         ArrayList<Ship> unsunkShips = new ArrayList<>();
         for (Ship s: this.ships) {
             if (!(s.sunk())) {
@@ -96,12 +82,18 @@ public class Player {
     }
 
     public void hideShips() {
+        /*
+         * hides ship for battling phase
+         */
         for (Ship ship : this.ships) {
             ship.hide();
         }
     }
 
     public ArrayList<ShipCell> allShipCells() {
+        /*
+         * array list for checking ship cells against coordinate cells for hit/miss
+         */
         ArrayList<ShipCell> cells = new ArrayList<>();
         for (Ship ship : this.ships) {
             cells.addAll(ship.cells);
@@ -110,20 +102,11 @@ public class Player {
     }
 
     public ArrayList<Coordinate> allShipCoordinates() {
-        ArrayList<Coordinate> arr = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> arr = new ArrayList<>();
         for (ShipCell c : this.allShipCells()) {
             arr.add(c.coordinates);
         }
         return arr;
-    }
-
-    public Coordinate hitShipCoordinates() {
-        for (ShipCell c : this.allShipCells()) {
-            if (c.isHit()) {
-                return c.coordinates;
-            }
-        }
-        return null;
     }
 
     public boolean hasShipAtCoord(Coordinate coord) {

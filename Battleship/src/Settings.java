@@ -18,19 +18,29 @@ public class Settings {
     public Settings() {}
 
     public Settings(boolean bombSize, boolean vsComputer) {
+        /*
+         * constructor for boolean conditions
+         */
         setBombSize(bombSize);
         this.vsComputer = vsComputer;
     }
 
     public Settings(int inputNumShips, int inputLength, boolean bombSize, boolean vsComputer) {
+        /*
+         * constructor for variable numShips and length
+         * if a user wants to change the number of ships
+         * they also have to specify the length
+         */
         amountOfShips(inputNumShips);
         shipLengths(inputLength);
         setBombSize(bombSize);
         this.vsComputer = vsComputer;
     }
 
-    // change SHIP_LENGTHS ArrayList amount of ships
     public void amountOfShips(int numShips) {
+        /*
+         * change SHIP_LENGTHS ArrayList amount of ships
+         */
         SHIP_LENGTHS = new ArrayList<Integer>();
         // need this loop to create the correct number of indexes in the new SHIP_LENGTH list
         // didn't work just calling "SHIP_LENGTHS = new ArrayList<Integer>(numShips)"
@@ -39,24 +49,23 @@ public class Settings {
         }
     }
 
-    // change SHIP_LENGTHS length
     public void shipLengths(int length) {
+        /*
+         * change SHIP_LENGTH lengths
+         */
         for (int ship : SHIP_LENGTHS) {
             SHIP_LENGTHS.set(ship, length);
         }
     }
 
-    // use big bomb size
     public void setBombSize(boolean bigBomb) {
+        /*
+         * use a bigger bomb size
+         */
         this.bigBomb = bigBomb;
     }
 
     public boolean getBombSize() {
         return bigBomb;
     }
-
-    public ArrayList<Integer> getShipList(){
-        return SHIP_LENGTHS;
-    }
-
 }

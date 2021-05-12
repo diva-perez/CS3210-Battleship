@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class Ship {
-    private Coordinate start;
-    private Orientation orientation;
-    public int length = 0;
+    private final Coordinate start;
+    private final Orientation orientation;
+    public int length;
     public ArrayList<ShipCell> cells;
 
     public Ship(Coordinate start, Orientation orientation, int length) {
@@ -23,8 +23,8 @@ public class Ship {
     }
 
     public boolean sunk() {
-        /**
-         * if all ShipCells have been hit
+        /*
+          if all ShipCells have been hit
          */
         boolean isSunk = true;
         for (ShipCell c : this.cells) {
@@ -42,9 +42,9 @@ public class Ship {
     }
 
     public ShipCell getCellAt(Coordinate coords) {
-        /**
-         * return the ShipCell at coords if there is one
-         * else None
+        /*
+          return the ShipCell at coords if there is one
+          else None
          */
         for (ShipCell cell : this.cells) {
             if (cell.coordinates.equals(coords)) {
@@ -55,8 +55,8 @@ public class Ship {
     }
 
     public boolean checkHit(Coordinate coord) {
-        /**
-         * raises Assertion Error if the shot his a cell that's already been hit
+        /*
+          raises Assertion Error if the shot his a cell that's already been hit
          */
         ShipCell cell = this.getCellAt(coord);
         if (cell != null) {
@@ -68,8 +68,8 @@ public class Ship {
     }
 
     public boolean collidesWith(Ship otherShip) {
-        /**
-         * checks if this ship overlap otherShip
+        /*
+          checks if this ship overlap otherShip
          */
         for (ShipCell c : this.cells) {
             if (otherShip.getCellAt(c.coordinates) != null) {
@@ -80,8 +80,8 @@ public class Ship {
     }
 
     public void hide() {
-        /**
-         * set ShipCellState.hidden for all ShipCells belonging to this ship
+        /*
+          set ShipCellState.hidden for all ShipCells belonging to this ship
          */
         for (ShipCell c : this.cells) {
             c.hide();

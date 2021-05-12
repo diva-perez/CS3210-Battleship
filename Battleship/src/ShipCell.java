@@ -1,5 +1,3 @@
-
-
 public class ShipCell{
     public ShipCellState state;
     public Coordinate coordinates;

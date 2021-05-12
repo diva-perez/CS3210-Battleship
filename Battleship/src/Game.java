@@ -15,10 +15,6 @@ public class Game {
         players.add(this.inactive);
         this.phase = GamePhase.PLACING;
         this.winner = null;
-        /*
-        System.out.println(this.current.toString() + ": " + this.current.unplacedShipLengths);
-        System.out.println(this.inactive.toString() + ": " + this.inactive.unplacedShipLengths);
-        */
     }
 
     // Get methods
@@ -30,21 +26,25 @@ public class Game {
     }
 
     public boolean allPlayersShipsPlaced() {
+        /*
+         * checks to see if all player ships have been placed
+         * needed to end player turns during placement phase
+         */
         boolean shipsPlaced = false;
         for (Player p : this.players) {
             System.out.println(p);
-            if(p.allShipsPlaced()) {
-                shipsPlaced = true;
-            }
-            else {
-                shipsPlaced = false;
-            }
+            shipsPlaced = p.allShipsPlaced();
         }
         return shipsPlaced;
     }
 
 
     public void endTurn() {
+        /*
+         * end player turns during placing and battling phase
+         * also checks to see if a player has met the win conditions
+         * handles changing of current and inactive players
+         */
         // check if win condition is met
         if (this.phase == GamePhase.BATTLING && (this.inactive.unsunkShips()).size() == 0) {
             this.phase = GamePhase.END;
@@ -75,7 +75,6 @@ public class Game {
         assert !(this.current.guesses.contains(coordinates));
         this.current.guesses.add(coordinates);
         boolean didHit = this.inactive.checkShipsHit(coordinates);
-        //this.endTurn();
         return didHit;
     }
 
