@@ -19,8 +19,8 @@ public class GameBoard extends JPanel implements KeyListener {
         this.game = game;
         setLayout(new BorderLayout());
         setOpaque(false);
-        addKeyListener(this);
         setFocusable(true);
+        addKeyListener(this);
 
         // title
         JLabel title = new JLabel(game.getCurrent().toString(), SwingConstants.CENTER);
@@ -46,7 +46,7 @@ public class GameBoard extends JPanel implements KeyListener {
                     if (game.getPhase() == Game.GamePhase.PLACING) {
                         game.placeShip(coordinateFocus, orientation);
                         title.setText(game.getCurrent().toString());
-                        // System.out.println("2" + game.getPhase());
+
                     // Action listener for BATTLING
                     } else if (game.getPhase() == Game.GamePhase.BATTLING){
                         game.fire(coordinateFocus);
@@ -54,13 +54,6 @@ public class GameBoard extends JPanel implements KeyListener {
                         if (MainWindow.settings.getBombSize()) {
                             System.out.println("Using a bigger bomb");
                             // additional bomb cells
-                            /*Coordinate RUQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y);
-                            Coordinate LLQ = new Coordinate(coordinateFocus.x, coordinateFocus.y + 1);
-                            Coordinate RLQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y + 1);
-                            System.out.println("Additional bomb cells at: ");
-                            System.out.println(RUQ.toString());
-                            System.out.println(LLQ.toString());
-                            System.out.println(RLQ.toString());*/
                             game.fire(RUQ);
                             game.fire(LLQ);
                             game.fire(RLQ);
@@ -76,6 +69,7 @@ public class GameBoard extends JPanel implements KeyListener {
                 cell.addMouseListener(new MouseAdapter() {
                     public void mouseEntered(MouseEvent e) {
                         coordinateFocus = cell.getCoord();
+                        requestFocusInWindow();
                         updateGUI();
                     }
                     public void mouseExited(MouseEvent e) {
@@ -162,7 +156,8 @@ public class GameBoard extends JPanel implements KeyListener {
                 }
                 highlights.add(next);
             }
-        } else if (game.getPhase() == Game.GamePhase.BATTLING) {    // highlight entire bomb size
+        } else if (game.getPhase() == Game.GamePhase.BATTLING) {
+            // highlight entire bomb size
             highlights.add(coordinateFocus);
             if (MainWindow.settings.getBombSize()) {
                 this.RUQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y);
@@ -173,7 +168,6 @@ public class GameBoard extends JPanel implements KeyListener {
                 highlights.add(RLQ);
             }
         }
-        System.out.println("This is the highlights list: " + highlights.toString());
         return highlights;
     }
 
