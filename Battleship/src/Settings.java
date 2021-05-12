@@ -9,7 +9,7 @@ public class Settings {
     public static int MAX_Y = BOARD_HEIGHT;
 
     // variable settings
-    public ArrayList<Integer> SHIP_LENGTHS = new ArrayList<Integer>(
+    public ArrayList<Integer> SHIP_LENGTHS = new ArrayList<>(
             Arrays.asList(2, 3, 3, 4, 5));
     private boolean bigBomb;
     private boolean vsComputer;
@@ -22,7 +22,7 @@ public class Settings {
          * constructor for boolean conditions
          */
         setBombSize(bombSize);
-        this.vsComputer = vsComputer;
+        vsComputer(vsComputer);
     }
 
     public Settings(int inputNumShips, int inputLength, boolean bombSize, boolean vsComputer) {
@@ -34,14 +34,14 @@ public class Settings {
         amountOfShips(inputNumShips);
         shipLengths(inputLength);
         setBombSize(bombSize);
-        this.vsComputer = vsComputer;
+        vsComputer(vsComputer);
     }
 
     public void amountOfShips(int numShips) {
         /*
          * change SHIP_LENGTHS ArrayList amount of ships
          */
-        SHIP_LENGTHS = new ArrayList<Integer>();
+        SHIP_LENGTHS = new ArrayList<>();
         // need this loop to create the correct number of indexes in the new SHIP_LENGTH list
         // didn't work just calling "SHIP_LENGTHS = new ArrayList<Integer>(numShips)"
         for (int i = 0; i < numShips; i++) {
@@ -65,7 +65,13 @@ public class Settings {
         this.bigBomb = bigBomb;
     }
 
-    public boolean getBombSize() {
-        return bigBomb;
+    public void vsComputer(boolean vsComputer) {
+        /*
+         * play against a computer
+         */
+        this.vsComputer = vsComputer;
     }
+
+    public boolean getBombSize() { return bigBomb; }
+    public boolean getComputer() { return vsComputer; }
 }

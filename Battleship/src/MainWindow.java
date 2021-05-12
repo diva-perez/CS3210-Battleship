@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class MainWindow extends JFrame {
     public static Settings settings = new Settings();
-    private MainMenu menu;
+    private final MainMenu menu;
     private JPanel boardPanel;
     public Game game;
     public GameBoard board;
@@ -50,7 +50,7 @@ public class MainWindow extends JFrame {
     public void endGame() {
         System.out.println(game.winner);
         boardPanel.setVisible(false);
-        EndPanel end = new EndPanel(game, this, game.winner);
+        EndPanel end = new EndPanel(game, this);
         add(end);
         setVisible(true);
     }

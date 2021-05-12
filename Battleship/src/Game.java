@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
     public ArrayList<Player> players;
@@ -9,7 +10,12 @@ public class Game {
 
     public Game() {
         this.current = new Player("Player One");
-        this.inactive = new Player("Player Two");
+        // check settings to see if 2 player game or 1 player game
+        if (MainWindow.settings.getComputer()) {
+            this.inactive = new Player("Computer");
+        } else {
+            this.inactive = new Player("Player Two");
+        }
         this.players = new ArrayList<>();
         players.add(this.current);
         players.add(this.inactive);
@@ -32,7 +38,6 @@ public class Game {
          */
         boolean shipsPlaced = false;
         for (Player p : this.players) {
-            System.out.println(p);
             shipsPlaced = p.allShipsPlaced();
         }
         return shipsPlaced;

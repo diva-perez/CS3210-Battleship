@@ -30,6 +30,8 @@ public class InstructionPanel extends JPanel {
                 "<br>" +
                 "When placing a ship, a green highlight will show you the cells your ship will be located in." +
                 "<br>" +
+                "You can press the 'R' key to rotate your ship's orientation." +
+                "<br>" +
                 "If your highlight is orange, that is not a valid location to place your ship." +
                 "<br>" +
                 "Click on a cell to place your ship. Once you place your ship, you cannot move it." +

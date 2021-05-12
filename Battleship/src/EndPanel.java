@@ -4,15 +4,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class EndPanel extends JPanel {
-    private MainWindow frame;
-    private JButton menu;
-    private Player winner;
-    private Game game;
+    private final MainWindow frame;
+    private final JButton menu;
 
-    public EndPanel(Game game, MainWindow frame, Player winner) {
+    public EndPanel(Game game, MainWindow frame) {
         this.frame = frame;
-        this.game = game;
-        this.winner = game.winner;
+        Player winner = game.winner;
         setOpaque(false);
         setLayout(new BorderLayout());
 

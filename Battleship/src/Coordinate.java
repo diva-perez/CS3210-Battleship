@@ -13,15 +13,6 @@ public class Coordinate {
         return "(" + this.x + ", " + this.y + ")";
     }
 
-    public boolean sort(Coordinate other) {
-        if (this.x > other.x) {
-            if (this.y > other.y) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,18 +27,20 @@ public class Coordinate {
     }
 
     public boolean onBoard() {
-        /**
+        /*
          * true if coordinates are on the board
          */
         if (0 <= this.x && this.x < Settings.MAX_X) {
-            if (0 <= this.y && this.y < Settings.MAX_Y) {
-                return true;
-            }
+            return 0 <= this.y && this.y < Settings.MAX_Y;
         }
         return false;
     }
 
     public Coordinate getEndFrom(int length, Orientation orientation) {
+        /*
+         * used to get the end of a ship from the focus coordinate
+         * used when placing a ship on the board
+         */
         Coordinate end = new Coordinate (this.x, this.y);
         if (orientation == Orientation.VERTICAL) {
             end.y += length - 1;

@@ -192,6 +192,6 @@ public class GameBoard extends JPanel implements KeyListener {
                 orientation = Orientation.VERTICAL;
             }
         }
-        System.out.println(orientation);
+        updateGUI();
     }
 }
