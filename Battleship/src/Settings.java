@@ -10,7 +10,7 @@ public class Settings {
 
     // variable settings
     public ArrayList<Integer> SHIP_LENGTHS = new ArrayList<>(
-            Arrays.asList(2, 3, 3, 4, 5));
+            Arrays.asList(1));
     private boolean bigBomb;
     private boolean vsComputer;
 

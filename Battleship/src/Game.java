@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Arrays;
 
 public class Game {
     public ArrayList<Player> players;
@@ -13,6 +13,7 @@ public class Game {
         // check settings to see if 2 player game or 1 player game
         if (MainWindow.settings.getComputer()) {
             this.inactive = new Player("Computer");
+            this.inactive.placeNextShip(new Coordinate(0, 0), Orientation.VERTICAL);
         } else {
             this.inactive = new Player("Player Two");
         }
@@ -42,7 +43,6 @@ public class Game {
         }
         return shipsPlaced;
     }
-
 
     public void endTurn() {
         /*

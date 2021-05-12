@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameBoard extends JPanel implements KeyListener {
     public Coordinate coordinateFocus;
@@ -44,6 +45,9 @@ public class GameBoard extends JPanel implements KeyListener {
                     // Action listener for PLACING
                     if (game.getPhase() == Game.GamePhase.PLACING) {
                         game.placeShip(coordinateFocus, orientation);
+                        if (game.getCurrent().toString().equals("Computer")) {
+                            game.endTurn();
+                        }
                         title.setText(game.getCurrent().toString());
 
                     // Action listener for BATTLING
@@ -144,7 +148,6 @@ public class GameBoard extends JPanel implements KeyListener {
                 chosenColor = validHighlight;
             }
             cell.setBackground(chosenColor);
-
         }
     }
 
