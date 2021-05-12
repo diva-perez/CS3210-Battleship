@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
-    public static Settings settings;
+    public static Settings settings = new Settings();
     private MainMenu menu;
     private InstructionPanel instructions;
     private SettingPanel settingsPanel;

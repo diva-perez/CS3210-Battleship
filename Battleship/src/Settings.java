@@ -11,28 +11,27 @@ public class Settings {
     // variable settings
     // this needs to not be static or wait to initialize until we hit start game / confirm in settings
     public ArrayList<Integer> SHIP_LENGTHS = new ArrayList<Integer>(
-            Arrays.asList(2, 1));
+            Arrays.asList(1));
     //private int numShips;
     //private int length;
-    //private boolean bigBomb = false;
-    //private boolean vsComputer = false;
+    private boolean bigBomb;
+    private boolean vsComputer;
 
 
     public Settings() {}
 
-    public Settings(int inputNumShips, int inputLength) {
-        amountOfShips(inputNumShips);
-        shipLengths(inputLength);
-    }
-
     public Settings(int inputNumShips, int inputLength, boolean bombSize, boolean vsComputer) {
         amountOfShips(inputNumShips);
         shipLengths(inputLength);
+        setBombSize(bombSize);
+        this.vsComputer = vsComputer;
     }
 
     // change SHIP_LENGTHS ArrayList amount of ships
     public void amountOfShips(int numShips) {
         SHIP_LENGTHS = new ArrayList<Integer>();
+        // need this loop to create the correct number of indexes in the new SHIP_LENGTH list
+        // didn't work just calling "SHIP_LENGTHS = new ArrayList<Integer>(numShips)"
         for (int i = 0; i < numShips; i++) {
             SHIP_LENGTHS.add(i);
         }
@@ -46,8 +45,12 @@ public class Settings {
     }
 
     // use big bomb size
-    public void bombSize(boolean bigBomb) {
+    public void setBombSize(boolean bigBomb) {
+        this.bigBomb = bigBomb;
+    }
 
+    public boolean getBombSize() {
+        return bigBomb;
     }
 
     public ArrayList<Integer> getShipList(){

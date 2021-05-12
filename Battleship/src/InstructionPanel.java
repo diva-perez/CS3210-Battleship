@@ -9,7 +9,6 @@ public class InstructionPanel extends JPanel {
 
     public InstructionPanel(MainWindow frame) {
         this.frame = frame;
-        setOpaque(false);
         setLayout(new BorderLayout());
 
         // title
@@ -20,11 +19,10 @@ public class InstructionPanel extends JPanel {
 
         // instructions
         JPanel info = new JPanel();
-        info.setBackground(new Color(255, 255, 255, 100));
         JLabel instructions = new JLabel("<html><div style='text-align: justify;'>" +
                 "HOW TO WIN:" +
                 "<br>" +
-                "You and your opponent will alternate turns placing bombs to try and hit each other's ships" +
+                "You and your opponent will alternate turns placing bombs to try and hit each other's ships." +
                 "<br>" +
                 "The first one to sink all of the other's ships wins." +
                 "<br><br>" +
@@ -32,12 +30,13 @@ public class InstructionPanel extends JPanel {
                 "<br>" +
                 "When placing a ship, a green highlight will show you the cells your ship will be located in." +
                 "<br>" +
-                "If your highlight is orange, that is not a valid location to place your ship" +
-                "Click on a cell to place your ship" +
+                "If your highlight is orange, that is not a valid location to place your ship." +
                 "<br>" +
-                "Gray cells show your ships placement on the board" +
+                "Click on a cell to place your ship. Once you place your ship, you cannot move it." +
                 "<br>" +
-                "Your ships cannot hang off the board, and they cannot be stacked on one another" +
+                "Gray cells show your ships placement on the board." +
+                "<br>" +
+                "Your ships cannot hang off the board, and they cannot be stacked on one another." +
                 "<br><br>" +
                 "BATTLING:" +
                 "<br>" +
@@ -60,7 +59,6 @@ public class InstructionPanel extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 25, 0));
-        buttonPanel.setOpaque(false);
         back = new JButton("Back");
         back.setFont(new Font("Arial", Font.PLAIN, 40));
         back.addMouseListener(new BackMouseListener());

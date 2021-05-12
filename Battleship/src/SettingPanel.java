@@ -14,7 +14,6 @@ public class SettingPanel extends JPanel {
 
     public SettingPanel(MainWindow frame) {
         this.frame = frame;
-        setOpaque(false);
         setLayout(new BorderLayout());
 
         // title
@@ -27,11 +26,9 @@ public class SettingPanel extends JPanel {
         JPanel center = new JPanel();
         center.setLayout(new BoxLayout(center, BoxLayout.PAGE_AXIS));
         center.setBorder(BorderFactory.createEmptyBorder(100, 0, 100, 0));
-        center.setBackground(new Color(255, 255, 255, 100));
 
         // Custom Ship Number
         JPanel option1 = new JPanel();
-        option1.setOpaque(false);
         JLabel numLabel = new JLabel("Enter the number of ships: ");
         numLabel.setFont(new Font("Arial", Font.BOLD, 20));
         option1.add(numLabel);
@@ -41,7 +38,6 @@ public class SettingPanel extends JPanel {
 
         // Custom Ship Length
         JPanel option2 = new JPanel();
-        option2.setOpaque(false);
         JLabel lengthLabel = new JLabel("Enter the length of the ships: ");
         lengthLabel.setFont(new Font("Arial", Font.BOLD, 20));
         option2.add(lengthLabel);
@@ -51,7 +47,6 @@ public class SettingPanel extends JPanel {
 
         // Custom Bomb Size
         JPanel option3 = new JPanel();
-        option3.setOpaque(false);
         JLabel bombLabel = new JLabel("Use bigger bombs: ");
         bombLabel.setFont(new Font("Arial", Font.BOLD, 20));
         option3.add(bombLabel);
@@ -67,16 +62,16 @@ public class SettingPanel extends JPanel {
 
         // Vs Computer
         JPanel option4 = new JPanel();
-        option4.setOpaque(false);
         JLabel vsLabel = new JLabel("Play against the computer: ");
         vsLabel.setFont(new Font("Arial", Font.BOLD, 20));
         option4.add(vsLabel);
         vsToggle = new JToggleButton("OFF");
         vsToggle.addItemListener(e -> {
-            if (vsToggle.isSelected())
+            if (vsToggle.isSelected()) {
                 vsToggle.setText("ON");
-            else
+            } else {
                 vsToggle.setText("OFF");
+            }
         });
         option4.add(vsToggle);
         center.add(option4);
@@ -92,24 +87,20 @@ public class SettingPanel extends JPanel {
                 final boolean bombSize = bombToggle.isSelected();
                 final boolean vsComputer = vsToggle.isSelected();
                 try {
-                    int intNumShips = Integer.parseInt(inputNumShips);
-                    int intLength = Integer.parseInt(inputLength);
+                    int intNumShips = Integer.parseInt(inputNumShips);  // cannot be larger than 5
+                    int intLength = Integer.parseInt(inputLength);      // cannot be larger than 10
                     System.out.println(intNumShips + ", " + intLength + ", Bigger bomb size: " + bombSize + ", Play against computer: " + vsComputer);
-                    MainWindow.settings = new Settings(intNumShips, intLength);
+                    MainWindow.settings = new Settings(intNumShips, intLength, bombSize, vsComputer);
                     System.out.println(MainWindow.settings.getShipList());
-                } catch (InputMismatchException exception) {
-                    System.out.println("could not find an integer in the string");
-
+                } catch (NumberFormatException exception) {
+                    System.out.println("No integer found in string");
                 }
                 frame.mainMenu();
                 setVisible(false);
             }
         });
-        //confirm.addMouseListener(new SettingPanel.ConfirmMouseListener());
-        //confirm.addMouseListener(new ConfirmMouseListener());
         JPanel south = new JPanel();
         south.setBorder(BorderFactory.createEmptyBorder(0, 0, 25, 0));
-        south.setOpaque(false);
         south.add(confirm);
 
         add(BorderLayout.SOUTH, south);

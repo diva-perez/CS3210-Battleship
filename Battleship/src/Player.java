@@ -18,8 +18,8 @@ public class Player {
         this.unplacedShipLengths = new ArrayList<>(MainWindow.settings.SHIP_LENGTHS);
         this.ships = new ArrayList<>();
         this.guesses = new ArrayList<>();   // where you tried to fire at enemy ships
-        this.hitList = new ArrayList<>();   // red pegs on your own ship
-        this.missList = new ArrayList<>();  // white pegs around your own ships
+        this.hitList = new ArrayList<>();   // red pegs on your ships
+        this.missList = new ArrayList<>();  // white pegs around your ships
     }
 
     public String toString() {
@@ -86,7 +86,6 @@ public class Player {
 
     public boolean checkShipsHit(Coordinate coords) {
         for (Ship ship : this.ships) {
-            System.out.println(this.toString() + " ship's: " + ship);
             if (ship.checkHit(coords)) {
                 hitList.add(coords);
                 return true;
@@ -130,7 +129,6 @@ public class Player {
     public boolean hasShipAtCoord(Coordinate coord) {
         for (Coordinate coordinate : this.allShipCoordinates()) {
             if (coord.equals(coordinate)) {
-                //System.out.println(this.allShipCoordinates());
                 return true;
             }
         }

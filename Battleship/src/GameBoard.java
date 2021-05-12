@@ -33,14 +33,12 @@ public class GameBoard extends JPanel implements KeyListener {
         gamePanel.setOpaque(false);
         this.cells = new Cell[100];
 
-        System.out.println("1" + game.getPhase());
         for (int y = 0; y < Settings.MAX_Y; y++) {
             for (int x = 0; x < Settings.MAX_X; x++) {
                 Cell cell = (new Cell(new Coordinate(x, y)));
                 this.cells[y * 10 + x] = cell;
                 cell.addActionListener(e -> {
                     coordinateFocus = cell.getCoord();
-                    System.out.println(coordinateFocus);
                     // Action listener for PLACING
                     if (game.getPhase() == Game.GamePhase.PLACING) {
                         game.placeShip(coordinateFocus, orientation);
@@ -49,6 +47,22 @@ public class GameBoard extends JPanel implements KeyListener {
                     // Action listener for BATTLING
                     } else if (game.getPhase() == Game.GamePhase.BATTLING){
                         game.fire(coordinateFocus);
+                        // fire consecutively for bigger bomb
+                        if (MainWindow.settings.getBombSize()) {
+                            System.out.println("Using a bigger bomb");
+                            // additional bomb cells
+                            Coordinate RUQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y);
+                            Coordinate LLQ = new Coordinate(coordinateFocus.x, coordinateFocus.y + 1);
+                            Coordinate RLQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y + 1);
+                            System.out.println("Additional bomb cells at: ");
+                            System.out.println(RUQ.toString());
+                            System.out.println(LLQ.toString());
+                            System.out.println(RLQ.toString());
+                            game.fire(RUQ);
+                            game.fire(LLQ);
+                            game.fire(RLQ);
+                        }
+                        this.game.endTurn();
                         title.setText(game.getCurrent().toString());
                         if (game.getPhase() == Game.GamePhase.END) {
                             frame.endGame();
@@ -150,7 +164,6 @@ public class GameBoard extends JPanel implements KeyListener {
         } else {    // battling -- need for bomb
 
         }
-        System.out.println(highlights);
         return highlights;
     }
 
