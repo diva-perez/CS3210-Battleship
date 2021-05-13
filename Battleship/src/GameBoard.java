@@ -45,8 +45,16 @@ public class GameBoard extends JPanel implements KeyListener {
             public void mouseClicked(MouseEvent e) {
                 // need to add code to get the computer to do it's guesses
                 Random random = new Random();
-                Coordinate compGuess = new Coordinate(random.nextInt(10), random.nextInt(10));
-                game.fire(compGuess);
+                coordinateFocus = new Coordinate(random.nextInt(10), random.nextInt(10));
+                game.fire(coordinateFocus);
+                if (MainWindow.settings.getBombSize()) {
+                    RUQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y);
+                    LLQ = new Coordinate(coordinateFocus.x, coordinateFocus.y + 1);
+                    RLQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y + 1);
+                    game.fire(RUQ);
+                    game.fire(LLQ);
+                    game.fire(RLQ);
+                }
                 game.endTurn();
                 card.show(c, "link 1");
             }

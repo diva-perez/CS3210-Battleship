@@ -17,7 +17,7 @@ public class Game {
             for (int i = 0; i < this.inactive.unplacedShipLengths.size(); i++) {
                 Random random = new Random();
                 Coordinate randomCoord = new Coordinate(random.nextInt(10), random.nextInt(10));
-                if (!randomCoord.getEndFrom(this.inactive.unplacedShipLengths.get(i), Orientation.VERTICAL).onBoard()) {
+                while (!randomCoord.getEndFrom(this.inactive.unplacedShipLengths.get(i), Orientation.VERTICAL).onBoard()) {
                     randomCoord = new Coordinate(random.nextInt(10), random.nextInt(10));
                 }
                 this.inactive.placeNextShip(randomCoord, Orientation.VERTICAL);
