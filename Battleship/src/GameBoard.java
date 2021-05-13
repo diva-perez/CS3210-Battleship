@@ -10,10 +10,10 @@ public class GameBoard extends JPanel implements KeyListener {
     private Coordinate LLQ;
     private Coordinate RLQ;
     private Orientation orientation = Orientation.VERTICAL;
-    public Game game;
-    public CardLayout card;
-    public JLabel title;
+    private final CardLayout card;
     private final Cell[] cells;
+    public Game game;
+    public JLabel title;
     public MainWindow frame;
 
     public GameBoard(Game game, MainWindow frame) {
@@ -74,6 +74,8 @@ public class GameBoard extends JPanel implements KeyListener {
         add(waitCard, "link 2");
 
         // gameboard panel
+        JPanel spacer = new JPanel();
+        spacer.setOpaque(false);
         JPanel gamePanel = new JPanel();
         this.game = game;
         gamePanel.setLayout(new GridLayout(10, 10));
@@ -141,22 +143,11 @@ public class GameBoard extends JPanel implements KeyListener {
                 gamePanel.add(cell);
             }
         }
-        gameCard.add(gamePanel);
+        spacer.add(gamePanel);
+        gameCard.add(spacer);
     }
 
     public void updateGUI() {
-        /*
-         * updates the cell colors of the entire board
-         */
-        Color invalidHighlight = Color.ORANGE;
-        Color validHighlight = Color.GREEN;
-        Color chosenColor = Color.BLUE;
-        Color ship = Color.GRAY;
-        Color ocean = Color.BLUE;
-        Color hit = Color.RED;
-        Color miss = Color.WHITE;
-        Color fog = Color.BLUE;
-
         //Game.GamePhase currentPhase = game.getPhase();
         ArrayList<Coordinate> highlights = this.getHighlightedCoords();
         title.setText(game.getCurrent().toString());
@@ -183,30 +174,31 @@ public class GameBoard extends JPanel implements KeyListener {
 
             // check conditions for each cell
             if (placing && !isHighlighted && !hasMyShip) {
-                chosenColor = ocean;
+                cell.setIcon("ocean.png");
             }
             if (placing && isHighlighted && validPlacingHighlight) {
-                chosenColor = validHighlight;
+                cell.setIcon("highlight.png");
             }
             if (placing && isHighlighted && !validPlacingHighlight) {
-                chosenColor = invalidHighlight;
+                cell.setIcon("invalid.png");
             }
             if (placing && hasMyShip) {
-                chosenColor = ship;
+                cell.setIcon("ship_1.png");
+                if (orientation == Orientation.VERTICAL) {
+                }
             }
             if (battling && isVisible && hasEnemyShip) {
-                chosenColor = hit;
+                cell.setIcon("hit.png");
             }
             if (battling && isVisible && !hasEnemyShip) {
-                chosenColor = miss;
+                cell.setIcon("miss.png");
             }
             if (battling && validBattlingHighlight) {
-                chosenColor = fog;
+                cell.setIcon("ocean.png");
             }
             if (battling && isHighlighted && validBattlingHighlight) {
-                chosenColor = validHighlight;
+                cell.setIcon("bomb.png");
             }
-            cell.setBackground(chosenColor);
         }
     }
 
@@ -228,9 +220,6 @@ public class GameBoard extends JPanel implements KeyListener {
             // highlight entire bomb size
             highlights.add(coordinateFocus);
             if (MainWindow.settings.getBombSize()) {
-                this.RUQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y);
-                this.LLQ = new Coordinate(coordinateFocus.x, coordinateFocus.y + 1);
-                this.RLQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y + 1);
                 highlights.add(RUQ);
                 highlights.add(LLQ);
                 highlights.add(RLQ);
