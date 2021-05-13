@@ -33,10 +33,10 @@ public class GameBoard extends JPanel implements KeyListener {
         waitCard.setOpaque(false);
         JLabel waitText = new JLabel("The Computer is Thinking", SwingConstants.CENTER);
         waitText.setOpaque(false);
-        waitText.setFont(new Font("Serif", Font.BOLD, 100));
+        waitText.setFont(VisualFormatting.headings1);
         JLabel waitText2 = new JLabel("Click anywhere to continue", SwingConstants.CENTER);
         waitText2.setOpaque(false);
-        waitText2.setFont(new Font("Arial", Font.BOLD, 50));
+        waitText2.setFont(VisualFormatting.headings2);
         waitText2.setForeground(Color.WHITE);
         waitCard.add(waitText, BorderLayout.NORTH);
         waitCard.add(waitText2, BorderLayout.CENTER);
@@ -66,7 +66,7 @@ public class GameBoard extends JPanel implements KeyListener {
         gameCard.setOpaque(false);
         title = new JLabel(game.getCurrent().toString(), SwingConstants.CENTER);
         title.setOpaque(false);
-        title.setFont(new Font("Serif", Font.BOLD, 100));
+        title.setFont(VisualFormatting.headings1);
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
         gameCard.add(title, BorderLayout.NORTH);
 
@@ -243,6 +243,7 @@ public class GameBoard extends JPanel implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
     }
+    @Override
     public void keyPressed(KeyEvent e) {
     }
     @Override

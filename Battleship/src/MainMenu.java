@@ -16,7 +16,7 @@ public class MainMenu extends JPanel {
 
         // title
         JLabel title = new JLabel("BATTLESHIP", SwingConstants.CENTER);
-        title.setFont(new Font("Serif", Font.BOLD, 100));
+        title.setFont(VisualFormatting.headings1);
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
         add(BorderLayout.NORTH, title);
 
@@ -25,19 +25,19 @@ public class MainMenu extends JPanel {
         // bomb size = 1
         // 2 players
         start = new JButton("Start Game");
-        start.setFont(new Font("Arial", Font.PLAIN, 40));
+        start.setFont(VisualFormatting.buttons);
         start.setAlignmentX(Component.CENTER_ALIGNMENT);
         start.addMouseListener(new StartMouseListener());
 
         // settings button
         setting = new JButton("Settings");
-        setting.setFont(new Font("Arial", Font.PLAIN, 40));
+        setting.setFont(VisualFormatting.buttons);
         setting.setAlignmentX(Component.CENTER_ALIGNMENT);
         setting.addMouseListener(new SettingsMouseListener());
 
         //instruction button
         instruction = new JButton("Instructions");
-        instruction.setFont(new Font("Arial", Font.PLAIN, 40));
+        instruction.setFont(VisualFormatting.buttons);
         instruction.setAlignmentX(Component.CENTER_ALIGNMENT);
         instruction.addMouseListener(new InstructionMouseListener());
 

@@ -13,7 +13,7 @@ public class InstructionPanel extends JPanel {
 
         // title
         JLabel title = new JLabel("INSTRUCTIONS", SwingConstants.CENTER);
-        title.setFont(new Font("Serif", Font.BOLD, 100));
+        title.setFont(VisualFormatting.headings1);
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
         add(BorderLayout.NORTH, title);
 
@@ -62,7 +62,7 @@ public class InstructionPanel extends JPanel {
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 25, 0));
         back = new JButton("Back");
-        back.setFont(new Font("Arial", Font.PLAIN, 40));
+        back.setFont(VisualFormatting.buttons);
         back.addMouseListener(new BackMouseListener());
         buttonPanel.add(back);
         add(BorderLayout.SOUTH, buttonPanel);

@@ -15,7 +15,7 @@ public class EndPanel extends JPanel {
 
         // winner announcement
         JLabel title = new JLabel("CONGRATULATIONS", SwingConstants.CENTER);
-        title.setFont(new Font("Serif", Font.BOLD, 100));
+        title.setFont(VisualFormatting.headings1);
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
         add(BorderLayout.NORTH, title);
         JLabel subtitle = new JLabel(winner + " wins!", SwingConstants.CENTER);
@@ -29,7 +29,7 @@ public class EndPanel extends JPanel {
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 25, 0));
         buttonPanel.setOpaque(false);
         menu = new JButton("Back");
-        menu.setFont(new Font("Arial", Font.PLAIN, 40));
+        menu.setFont(VisualFormatting.buttons);
         menu.addMouseListener(new MenuMouseListener());
         buttonPanel.add(menu);
         add(BorderLayout.SOUTH, buttonPanel);

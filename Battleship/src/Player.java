@@ -60,7 +60,7 @@ public class Player {
         assert start.onBoard() : "Start coordinate not valid";
         assert end.onBoard() : "End coordinate not valid";
 
-        // check new ship doesn't coolide with another ship
+        // check new ship doesn't collide with another ship
         Ship newShip = new Ship(start, orientation, length);
         for (Ship otherShip : this.ships) {
             assert !(otherShip.collidesWith(newShip));

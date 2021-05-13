@@ -7,12 +7,12 @@ public class Settings {
     public static int BOARD_HEIGHT = 10;
     public static int MAX_X = BOARD_WIDTH;
     public static int MAX_Y = BOARD_HEIGHT;
+    private static boolean vsComputer;
 
     // variable settings
     public ArrayList<Integer> SHIP_LENGTHS = new ArrayList<>(
             Arrays.asList(2, 3, 3, 4, 5));
     private boolean bigBomb;
-    private boolean vsComputer;
 
 
     public Settings() {
@@ -81,5 +81,5 @@ public class Settings {
     }
 
     public boolean getBombSize() { return bigBomb; }
-    public boolean getComputer() { return vsComputer; }
+    public static boolean getComputer() { return vsComputer; }
 }
