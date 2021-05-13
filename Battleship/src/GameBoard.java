@@ -10,32 +10,54 @@ public class GameBoard extends JPanel implements KeyListener {
     private Coordinate RLQ;
     private Orientation orientation = Orientation.VERTICAL;
     public Game game;
+    public CardLayout card;
     private final Cell[] cells;
     public MainWindow frame;
 
     public GameBoard(Game game, MainWindow frame) {
         this.frame = frame;
         this.game = game;
-        CardLayout card = new CardLayout();
+        card = new CardLayout();
+        // need this container for the card layout to work properly
+        Container c = this;
         setLayout(card);
         setOpaque(false);
         setFocusable(true);
         addKeyListener(this);
+
+        // wait card for computer
         JPanel waitCard = new JPanel();
         waitCard.setLayout(new BorderLayout());
         waitCard.setOpaque(false);
+        JLabel waitText = new JLabel("The Computer is Thinking", SwingConstants.CENTER);
+        waitText.setOpaque(false);
+        waitText.setFont(new Font("Serif", Font.BOLD, 100));
+        JLabel waitText2 = new JLabel("Click anywhere to tell him to hurry up", SwingConstants.CENTER);
+        waitText2.setOpaque(false);
+        waitText2.setFont(new Font("Arial", Font.BOLD, 50));
+        waitText2.setForeground(Color.WHITE);
+        waitCard.add(waitText, BorderLayout.NORTH);
+        waitCard.add(waitText2, BorderLayout.CENTER);
+        waitCard.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // need to add code to get the computer to do it's guesses
+                card.show(c, "link 1");
+            }
+        });
+
+        // game card
         JPanel gameCard = new JPanel();
         gameCard.setLayout(new BorderLayout());
         gameCard.setOpaque(false);
-        add(gameCard, "link 1");
-        add(waitCard, "link 2");
-
-        // title
         JLabel title = new JLabel(game.getCurrent().toString(), SwingConstants.CENTER);
         title.setOpaque(false);
         title.setFont(new Font("Serif", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
         gameCard.add(title, BorderLayout.NORTH);
+
+        add(gameCard, "link 1");
+        add(waitCard, "link 2");
 
         // gameboard panel
         JPanel gamePanel = new JPanel();
@@ -64,7 +86,6 @@ public class GameBoard extends JPanel implements KeyListener {
                     } else if (game.getPhase() == Game.GamePhase.BATTLING){
                         if (game.inactive.toString().equals("Computer")) {
                             card.show(this, "link 2");
-                            // displays wait panel and wait for mouse click from player 1 to generate guess coordinate
                         }
                         game.fire(coordinateFocus);
                         // fire consecutively for bigger bomb
@@ -192,6 +213,8 @@ public class GameBoard extends JPanel implements KeyListener {
         }
         return highlights;
     }
+
+    // KeyListener Implementation
     @Override
     public void keyTyped(KeyEvent e) {
     }
