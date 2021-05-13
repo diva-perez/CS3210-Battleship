@@ -13,7 +13,7 @@ public class Ship {
         this.cells = new ArrayList<>();
         for (int i = 1; i < length + 1; i++) {
             Coordinate newCoordinate = start.getEndFrom(i, orientation);
-            ShipCell newCell = new ShipCell(newCoordinate);
+            ShipCell newCell = new ShipCell(newCoordinate, orientation);
             this.cells.add(newCell);
         }
     }

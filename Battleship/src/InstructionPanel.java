@@ -19,26 +19,20 @@ public class InstructionPanel extends JPanel {
 
         // instructions
         JPanel info = new JPanel();
-        JLabel instructions = new JLabel("<html><div style='text-align: justify;'>" +
-                "HOW TO WIN:" +
-                "<br>" +
-                "You and your opponent will alternate turns placing bombs to try and hit each other's ships." +
-                "<br>" +
-                "The first one to sink all of the other's ships wins." +
-                "<br><br>" +
+        JLabel instructions = new JLabel("<html><div style='text-align: justify; text-size: 12pt'>" +
                 "PLACING:" +
                 "<br>" +
                 "When placing a ship, a green highlight will show you the cells your ship will be located in." +
                 "<br>" +
                 "You can press the 'R' key to rotate your ship's orientation." +
                 "<br>" +
-                "If your highlight is orange, that is not a valid location to place your ship." +
+                "If your highlight has red 'X's, that is not a valid location to place your ship." +
                 "<br>" +
                 "Click on a cell to place your ship. Once you place your ship, you cannot move it." +
                 "<br>" +
-                "Gray cells show your ships placement on the board." +
+                "Your ships cannot hang off the board or be stacked on one another." +
                 "<br>" +
-                "Your ships cannot hang off the board, and they cannot be stacked on one another." +
+                "Gray cells show your ships placement on the board." +
                 "<br><br>" +
                 "BATTLING:" +
                 "<br>" +
@@ -48,8 +42,10 @@ public class InstructionPanel extends JPanel {
                 "<br>" +
                 "If your guess is a hit, the cell will turn red." +
                 "<br>" +
-                "To sink a ship, you must hit all the cells a ship is in" +
+                "To sink a ship, you must hit all the cells a ship is in." +
                 "<br>" +
+                "When playing against the computer, you can see if the computer's guess hit or miss right after the waiting screen." +
+                "<br><br>" +
                 "The game ends when all of your opponents ships have sunk." +
                 "</div></html>");
         instructions.setFont(new Font("Arial", Font.PLAIN, 25));

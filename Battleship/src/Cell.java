@@ -14,12 +14,6 @@ public class Cell extends JButton {
         setBackground(Color.BLUE);
     }
 
-    public Cell(Coordinate coordinate, String filePath) {
-        this.coordinate = coordinate;
-        setPreferredSize(new Dimension(50, 50));
-        setBackground(Color.BLUE);
-    }
-
     public Coordinate getCoord() {
         return this.coordinate;
     }

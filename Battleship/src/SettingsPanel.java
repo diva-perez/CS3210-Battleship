@@ -80,7 +80,9 @@ public class SettingsPanel extends JPanel {
             try {
                 int intNumShips = Integer.parseInt(inputNumShips);  // cannot be larger than 5
                 int intLength = Integer.parseInt(inputLength);      // cannot be larger than 10
-                if (intNumShips <= 5 && intLength <= 10) {
+                if (numField.contains(null) && lengthField.contains(null)) {
+                    MainWindow.settings = new Settings (bombSize, vsComputer);
+                }else if (intNumShips <= 5 && intLength <= 10) {
                     MainWindow.settings = new Settings(intNumShips, intLength, bombSize, vsComputer);
                 } else {
                     System.out.println("Number of Ships cannot exceed 5");

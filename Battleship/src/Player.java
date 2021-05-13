@@ -109,6 +109,16 @@ public class Player {
         return arr;
     }
 
+    public ShipCell getShipCellAtCoord(Coordinate coord) {
+        for (Ship ship : this.ships) {
+            ShipCell found = ship.getCellAt(coord);
+            if (found != null && found.coordinates.equals(coord)) {
+                return found;
+            }
+        }
+        return null;
+    }
+
     public boolean hasShipAtCoord(Coordinate coord) {
         for (Coordinate coordinate : this.allShipCoordinates()) {
             if (coord.equals(coordinate)) {

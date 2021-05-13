@@ -1,9 +1,11 @@
 public class ShipCell{
     public ShipCellState state;
     public Coordinate coordinates;
+    public Orientation orientation;
 
-    public ShipCell(Coordinate coordinate) {
+    public ShipCell(Coordinate coordinate, Orientation orientation) {
         this.coordinates = coordinate;
+        this.orientation = orientation;
         this.state = ShipCellState.PLACED;
     }
 

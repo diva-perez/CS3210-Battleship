@@ -31,10 +31,10 @@ public class GameBoard extends JPanel implements KeyListener {
         JPanel waitCard = new JPanel();
         waitCard.setLayout(new BorderLayout());
         waitCard.setOpaque(false);
-        JLabel waitText = new JLabel("The Computer is Thinking", SwingConstants.CENTER);
+        JLabel waitText = new JLabel("The Computer is Guessing", SwingConstants.CENTER);
         waitText.setOpaque(false);
         waitText.setFont(VisualFormatting.headings1);
-        JLabel waitText2 = new JLabel("Click anywhere to continue", SwingConstants.CENTER);
+        JLabel waitText2 = new JLabel("Click anywhere to see what happened", SwingConstants.CENTER);
         waitText2.setOpaque(false);
         waitText2.setFont(VisualFormatting.headings2);
         waitText2.setForeground(Color.WHITE);
@@ -148,13 +148,16 @@ public class GameBoard extends JPanel implements KeyListener {
     }
 
     public void updateGUI() {
-        //Game.GamePhase currentPhase = game.getPhase();
         ArrayList<Coordinate> highlights = this.getHighlightedCoords();
+        ArrayList<Ship> ships = game.current.ships;
+        // needed for when player is playing against the computer
+        // player will see the computer's board for a second to see where the computer guessed
+        // when player moves their mouse, the title will update and they will see their board for guessing
         title.setText(game.getCurrent().toString());
         for (Cell cell : this.cells) {
             Coordinate currentCoord = cell.getCoord();
 
-            // boolean conditions for cell coloring
+            // boolean conditions for cell icon
             boolean hasMyShip = game.current.hasShipAtCoord(currentCoord);
             boolean hasEnemyShip = game.inactive.hasShipAtCoord(currentCoord);
             boolean placing = game.getPhase() == Game.GamePhase.PLACING;
@@ -171,6 +174,13 @@ public class GameBoard extends JPanel implements KeyListener {
                 allHighlightedEmpty = allHighlightedEmpty && !(game.current.allShipCoordinates().contains(coordinates));
             }
             boolean validPlacingHighlight = shipFitsOnBoard && allHighlightedEmpty;
+            boolean shipIsVertical = true;
+            if (hasMyShip) {
+                ShipCell shipCell = game.current.getShipCellAtCoord(currentCoord);
+                if (shipCell.orientation == Orientation.HORIZONTAL) {
+                    shipIsVertical = false;
+                }
+            }
 
             // check conditions for each cell
             if (placing && !isHighlighted && !hasMyShip) {
@@ -182,10 +192,11 @@ public class GameBoard extends JPanel implements KeyListener {
             if (placing && isHighlighted && !validPlacingHighlight) {
                 cell.setIcon("invalid.png");
             }
-            if (placing && hasMyShip) {
+            if (placing && hasMyShip && !shipIsVertical) {
+                cell.setIcon("ship_2.png");
+            }
+            if (placing && hasMyShip && shipIsVertical) {
                 cell.setIcon("ship_1.png");
-                if (orientation == Orientation.VERTICAL) {
-                }
             }
             if (battling && isVisible && hasEnemyShip) {
                 cell.setIcon("hit.png");
@@ -220,6 +231,9 @@ public class GameBoard extends JPanel implements KeyListener {
             // highlight entire bomb size
             highlights.add(coordinateFocus);
             if (MainWindow.settings.getBombSize()) {
+                RUQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y);
+                LLQ = new Coordinate(coordinateFocus.x, coordinateFocus.y + 1);
+                RLQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y + 1);
                 highlights.add(RUQ);
                 highlights.add(LLQ);
                 highlights.add(RLQ);
