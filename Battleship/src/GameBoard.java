@@ -34,7 +34,7 @@ public class GameBoard extends JPanel implements KeyListener {
         JLabel waitText = new JLabel("The Computer is Guessing", SwingConstants.CENTER);
         waitText.setOpaque(false);
         waitText.setFont(VisualFormatting.headings1);
-        JLabel waitText2 = new JLabel("Click anywhere to see what happened", SwingConstants.CENTER);
+        JLabel waitText2 = new JLabel("Click anywhere to Continue", SwingConstants.CENTER);
         waitText2.setOpaque(false);
         waitText2.setFont(VisualFormatting.headings2);
         waitText2.setForeground(Color.WHITE);
@@ -92,26 +92,17 @@ public class GameBoard extends JPanel implements KeyListener {
                     if (game.getPhase() == Game.GamePhase.PLACING) {
                         game.placeShip(coordinateFocus, orientation);
                         // skip Computer's placing turn since their ships are already placed
-                        if (game.getCurrent().toString().equals("Computer")) {
+                        if (game.current.toString().equals("Computer")) {
                             game.phase = Game.GamePhase.BATTLING;
-                            game.fire(coordinateFocus);
-                            if (MainWindow.settings.getBombSize()) {
-                                RUQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y);
-                                LLQ = new Coordinate(coordinateFocus.x, coordinateFocus.y + 1);
-                                RLQ = new Coordinate(coordinateFocus.x + 1, coordinateFocus.y + 1);
-                                game.fire(RUQ);
-                                game.fire(LLQ);
-                                game.fire(RLQ);
-                            }
                             game.endTurn();
-                        }
+                            }
                         title.setText(game.getCurrent().toString());
 
                     // Action listener for BATTLING
                     } else if (game.getPhase() == Game.GamePhase.BATTLING){
                         // display computer thinking card
                         if (game.inactive.toString().equals("Computer")) {
-                            card.show(this, "link 2");
+                            card.show(c, "link 2");
                         }
                         game.fire(coordinateFocus);
                         // fire consecutively for bigger bomb
@@ -149,7 +140,6 @@ public class GameBoard extends JPanel implements KeyListener {
 
     public void updateGUI() {
         ArrayList<Coordinate> highlights = this.getHighlightedCoords();
-        ArrayList<Ship> ships = game.current.ships;
         // needed for when player is playing against the computer
         // player will see the computer's board for a second to see where the computer guessed
         // when player moves their mouse, the title will update and they will see their board for guessing

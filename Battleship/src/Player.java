@@ -53,17 +53,22 @@ public class Player {
         return unsunkShips;
     }
 
-    public void placeNextShip(Coordinate start, Orientation orientation) {
+    public void placeNextShip(Coordinate start, Orientation orientation) throws InvalidShipPlacingException {
         int length = this.nextUnplacedShipLength();
         assert length >= 1 : "Ships cannot be smaller than size 1";
         Coordinate end = start.getEndFrom(length, orientation);
-        assert start.onBoard() : "Start coordinate not valid";
-        assert end.onBoard() : "End coordinate not valid";
+        if (!end.onBoard()) {
+            System.err.println("Ships cannot extend beyond the board!");
+            throw new InvalidShipPlacingException("ship placement is not valid");
+        }
 
         // check new ship doesn't collide with another ship
         Ship newShip = new Ship(start, orientation, length);
         for (Ship otherShip : this.ships) {
-            assert !(otherShip.collidesWith(newShip));
+            if (otherShip.collidesWith(newShip)) {
+                System.err.println("Ships cannot be stacked!");
+                throw new InvalidShipPlacingException("ship placement is not valid");
+            }
 
         }
         this.unplacedShipLengths.remove(this.NEXT_UNPLACED_INDEX);

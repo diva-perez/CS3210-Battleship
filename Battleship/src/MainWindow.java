@@ -48,7 +48,6 @@ public class MainWindow extends JFrame {
     }
 
     public void endGame() {
-        System.out.println(game.winner);
         boardPanel.setVisible(false);
         EndPanel end = new EndPanel(game, this);
         add(end);

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Game {
@@ -14,15 +13,20 @@ public class Game {
         // check settings to see if 2 player game or 1 player game
         if (MainWindow.settings.getComputer()) {
             this.inactive = new Player("Computer");
+            Random random = new Random();
+            Coordinate randomCoord;
             for (int i = 0; i < this.inactive.unplacedShipLengths.size(); i++) {
-                Random random = new Random();
-                Coordinate randomCoord = new Coordinate(random.nextInt(10), random.nextInt(10));
+                randomCoord = new Coordinate(random.nextInt(10), random.nextInt(10));
                 while (!randomCoord.getEndFrom(this.inactive.unplacedShipLengths.get(i), Orientation.VERTICAL).onBoard()) {
                     randomCoord = new Coordinate(random.nextInt(10), random.nextInt(10));
                 }
-                this.inactive.placeNextShip(randomCoord, Orientation.VERTICAL);
-                // unplacedShipLengths gets shorter as you place a ship
-                i = i - 1;
+                try {
+                    this.inactive.placeNextShip(randomCoord, Orientation.VERTICAL);
+                    // unplacedShipLengths gets shorter as you place a ship
+                    i = i - 1;
+                } catch (InvalidShipPlacingException e) {
+                    System.err.println("Ship placement is invalid");
+                }
             }
         } else {
             this.inactive = new Player("Player Two");
@@ -79,18 +83,20 @@ public class Game {
 
     public void placeShip(Coordinate coordinates, Orientation orientation) {
         assert this.phase == GamePhase.PLACING;
-        this.current.placeNextShip(coordinates, orientation);
-        if (this.current.allShipsPlaced()) {
-            assert this.current.ships.contains(coordinates) : "player ships list is not correct";
-            this.endTurn();
+        try {
+            this.current.placeNextShip(coordinates, orientation);
+            if (this.current.allShipsPlaced()) {
+                this.endTurn();
+            }
+        } catch (InvalidShipPlacingException e) {
+            // visual GUI informs player of invalid placement
         }
     }
 
     public boolean fire(Coordinate coordinates) {
         assert !(this.current.guesses.contains(coordinates));
         this.current.guesses.add(coordinates);
-        boolean didHit = this.inactive.checkShipsHit(coordinates);
-        return didHit;
+        return this.inactive.checkShipsHit(coordinates);
     }
 
 

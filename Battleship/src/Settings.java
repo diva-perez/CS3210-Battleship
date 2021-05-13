@@ -81,5 +81,5 @@ public class Settings {
     }
 
     public boolean getBombSize() { return bigBomb; }
-    public static boolean getComputer() { return vsComputer; }
+    public boolean getComputer() { return vsComputer; }
 }
