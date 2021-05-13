@@ -4,29 +4,38 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class GameBoard extends JPanel implements KeyListener {
-    public Coordinate coordinateFocus;
-    public Coordinate RUQ;
-    public Coordinate LLQ;
-    public Coordinate RLQ;
-    public Orientation orientation = Orientation.VERTICAL;
+    private Coordinate coordinateFocus;
+    private Coordinate RUQ;
+    private Coordinate LLQ;
+    private Coordinate RLQ;
+    private Orientation orientation = Orientation.VERTICAL;
     public Game game;
-    public Cell[] cells;
+    private final Cell[] cells;
     public MainWindow frame;
 
     public GameBoard(Game game, MainWindow frame) {
         this.frame = frame;
         this.game = game;
-        setLayout(new BorderLayout());
+        CardLayout card = new CardLayout();
+        setLayout(card);
         setOpaque(false);
         setFocusable(true);
         addKeyListener(this);
+        JPanel waitCard = new JPanel();
+        waitCard.setLayout(new BorderLayout());
+        waitCard.setOpaque(false);
+        JPanel gameCard = new JPanel();
+        gameCard.setLayout(new BorderLayout());
+        gameCard.setOpaque(false);
+        add(gameCard, "link 1");
+        add(waitCard, "link 2");
 
         // title
         JLabel title = new JLabel(game.getCurrent().toString(), SwingConstants.CENTER);
         title.setOpaque(false);
         title.setFont(new Font("Serif", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
-        add(title, BorderLayout.NORTH);
+        gameCard.add(title, BorderLayout.NORTH);
 
         // gameboard panel
         JPanel gamePanel = new JPanel();
@@ -44,6 +53,7 @@ public class GameBoard extends JPanel implements KeyListener {
                     // Action listener for PLACING
                     if (game.getPhase() == Game.GamePhase.PLACING) {
                         game.placeShip(coordinateFocus, orientation);
+                        // skip Computer's placing turn since their ships are already placed
                         if (game.getCurrent().toString().equals("Computer")) {
                             game.endTurn();
                             game.phase = Game.GamePhase.BATTLING;
@@ -52,6 +62,10 @@ public class GameBoard extends JPanel implements KeyListener {
 
                     // Action listener for BATTLING
                     } else if (game.getPhase() == Game.GamePhase.BATTLING){
+                        if (game.inactive.toString().equals("Computer")) {
+                            card.show(this, "link 2");
+                            // displays wait panel and wait for mouse click from player 1 to generate guess coordinate
+                        }
                         game.fire(coordinateFocus);
                         // fire consecutively for bigger bomb
                         if (MainWindow.settings.getBombSize()) {
@@ -82,7 +96,7 @@ public class GameBoard extends JPanel implements KeyListener {
                 gamePanel.add(cell);
             }
         }
-        add(gamePanel);
+        gameCard.add(gamePanel);
     }
 
     public void updateGUI() {

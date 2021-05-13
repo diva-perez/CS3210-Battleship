@@ -14,7 +14,6 @@ public class Game {
         // check settings to see if 2 player game or 1 player game
         if (MainWindow.settings.getComputer()) {
             this.inactive = new Player("Computer");
-            System.out.println(this.inactive.unplacedShipLengths);
             for (int i = 0; i < this.inactive.unplacedShipLengths.size(); i++) {
                 Random random = new Random();
                 Coordinate randomCoord = new Coordinate(random.nextInt(10), random.nextInt(10));
@@ -25,8 +24,6 @@ public class Game {
                 // unplacedShipLengths gets shorter as you place a ship
                 i = i - 1;
             }
-            System.out.println(this.inactive.unplacedShipLengths);
-            System.out.println(this.inactive.ships);
         } else {
             this.inactive = new Player("Player Two");
         }
