@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameBoard extends JPanel implements KeyListener {
     private Coordinate coordinateFocus;
@@ -11,6 +12,7 @@ public class GameBoard extends JPanel implements KeyListener {
     private Orientation orientation = Orientation.VERTICAL;
     public Game game;
     public CardLayout card;
+    public JLabel title;
     private final Cell[] cells;
     public MainWindow frame;
 
@@ -32,7 +34,7 @@ public class GameBoard extends JPanel implements KeyListener {
         JLabel waitText = new JLabel("The Computer is Thinking", SwingConstants.CENTER);
         waitText.setOpaque(false);
         waitText.setFont(new Font("Serif", Font.BOLD, 100));
-        JLabel waitText2 = new JLabel("Click anywhere to tell him to hurry up", SwingConstants.CENTER);
+        JLabel waitText2 = new JLabel("Click anywhere to continue", SwingConstants.CENTER);
         waitText2.setOpaque(false);
         waitText2.setFont(new Font("Arial", Font.BOLD, 50));
         waitText2.setForeground(Color.WHITE);
@@ -42,6 +44,10 @@ public class GameBoard extends JPanel implements KeyListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // need to add code to get the computer to do it's guesses
+                Random random = new Random();
+                Coordinate compGuess = new Coordinate(random.nextInt(10), random.nextInt(10));
+                game.fire(compGuess);
+                game.endTurn();
                 card.show(c, "link 1");
             }
         });
@@ -50,7 +56,7 @@ public class GameBoard extends JPanel implements KeyListener {
         JPanel gameCard = new JPanel();
         gameCard.setLayout(new BorderLayout());
         gameCard.setOpaque(false);
-        JLabel title = new JLabel(game.getCurrent().toString(), SwingConstants.CENTER);
+        title = new JLabel(game.getCurrent().toString(), SwingConstants.CENTER);
         title.setOpaque(false);
         title.setFont(new Font("Serif", Font.BOLD, 100));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 50, 0));
@@ -84,6 +90,7 @@ public class GameBoard extends JPanel implements KeyListener {
 
                     // Action listener for BATTLING
                     } else if (game.getPhase() == Game.GamePhase.BATTLING){
+                        // display computer thinking card
                         if (game.inactive.toString().equals("Computer")) {
                             card.show(this, "link 2");
                         }
@@ -135,6 +142,7 @@ public class GameBoard extends JPanel implements KeyListener {
 
         //Game.GamePhase currentPhase = game.getPhase();
         ArrayList<Coordinate> highlights = this.getHighlightedCoords();
+        title.setText(game.getCurrent().toString());
         for (Cell cell : this.cells) {
             Coordinate currentCoord = cell.getCoord();
 
